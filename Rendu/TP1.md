@@ -58,3 +58,9 @@
 |------------------------------------|--------------------------|
 | Polling                            | ...                      |
 | Interruptions                      | ...                      |
+
+### R3 A quoi sert les préfixes suivants, souvent utilisés en embarqué : volatile sur la variable d'état des boutons poussoirs, static sur le routine d'interruption ?
+| Préfixe                            | Rôle                     |
+|------------------------------------|--------------------------|
+| Volatile                           | ...                      |
+| Static                             | ...                      |
