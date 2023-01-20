@@ -107,10 +107,8 @@ void displayNothing()
   IOWR_ALTERA_AVALON_PIO_DATA(hex5, 0b1111111);
 }
 
-int main()
+void runC2()
 {
-  printf("Hello from Nios II!\n");
-
   displayNothing();
 
   usleep(1000000);
@@ -123,11 +121,18 @@ int main()
 
   for (;;)
   {
-    usleep(1000000);
+    usleep(100000);
     displayNumber(9999);
-    usleep(1000000);
-        displayNothing();
+    usleep(100000);
+    displayNothing();
   }
+}
+
+int main()
+{
+  printf("Hello from Nios II!\n");
+
+  runC2();
 
   return 0;
 }
