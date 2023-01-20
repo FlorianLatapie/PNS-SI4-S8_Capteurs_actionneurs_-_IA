@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <altera_avalon_pio_regs.h>
+#include <system.h>
 
 const int hex0 = 0x8005080;
 const int hex1 = 0x8005070;
@@ -85,7 +86,7 @@ int convertTo7segments(int input)
   }
 }
 
-void displayNumber(int number)
+void displayDecimalNumber(int number)
 {
   int array[6] = {0, 0, 0, 0, 0, 0};
   separateNumber(number, array);
@@ -107,6 +108,10 @@ void displayNothing()
   IOWR_ALTERA_AVALON_PIO_DATA(hex5, 0b1111111);
 }
 
+void display0(){
+  displayDecimalNumber(0);
+}
+
 void runC2()
 {
   displayNothing();
@@ -115,24 +120,109 @@ void runC2()
 
   for (int k = 0; k <= 9999; k++)
   {
-    displayNumber(k);
+    displayDecimalNumber(k);
     usleep(10000);
   }
 
   for (;;)
   {
     usleep(100000);
-    displayNumber(9999);
+    displayDecimalNumber(9999);
     usleep(100000);
     displayNothing();
   }
+}
+
+void ledOff()
+{
+  IOWR_ALTERA_AVALON_PIO_DATA(leds, 0b0000000000);
+}
+
+
+// display a binary number as a decimal number on the 7 segments display
+void displayBinaryNumber(int number)
+{
+  int value;
+  switch (number)
+  {
+  case 14:
+    displayDecimalNumber(4);
+    break;
+  case 13:
+    displayDecimalNumber(3);
+    break;
+  case 11:
+    displayDecimalNumber(2);
+    break;
+  case 7:
+    displayDecimalNumber(1);
+    break;
+  default:
+    break;
+  }
+}
+
+volatile int edge_capture;
+
+
+static void handle_button_interrupts(void *context, alt_u32 id)
+{
+  /* Cast context to edge_capture's type. It is important that this be
+   * declared volatile to avoid unwanted compiler optimization.
+   */
+  volatile int *edge_capture_ptr = (volatile int *)context;
+
+  /* Store the value in the Button's edge capture register in *context. */
+  *edge_capture_ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(key);
+
+  /* Reset the Button's edge capture register. */
+  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(key, 0);
+
+  /* Perform the button press handling code here. */
+  IOWR_ALTERA_AVALON_PIO_DATA(hex0, 0b1111111);
+  displayDecimalNumber(edge_capture);
+  printf("triggered %d", edge_capture);
+}
+
+static void init_button_pio()
+{
+  /* Recast the edge_capture pointer to match the alt_irq_register() function
+   * prototype. */
+  void *edge_capture_ptr = (void *)&edge_capture;
+
+  /* Enable all 4 button interrupts. */
+  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(key, 0xf);
+
+  /* Reset the edge capture register. */
+  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(key, 0x0);
+
+  /* Register the ISR */
+  alt_irq_register(KEY_IRQ, edge_capture_ptr, handle_button_interrupts);
+  
 }
 
 int main()
 {
   printf("Hello from Nios II!\n");
 
-  runC2();
+  displayNothing();
+  ledOff();
 
+  init_button_pio();
+  
+
+
+  for (;;)
+  {
+    // indiquer le numéro du bouton pressé sur l'afficheur 7 segments
+    
+
+    // les leds rouges sont allumées si le switch en face est en position haute
+    int switchValue = IORD_ALTERA_AVALON_PIO_DATA(switches); // 10 switches returned as an int
+    IOWR_ALTERA_AVALON_PIO_DATA(leds, switchValue);
+
+    // cette config des switch est utilisée pour programmer le temps d'attente de la boucle principale (plus l'utilisateur lève le switch, plus le temps d'attente est long)
+    usleep(10000);
+  }
   return 0;
 }
