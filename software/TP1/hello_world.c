@@ -18,13 +18,21 @@
 #include <unistd.h>
 #include <altera_avalon_pio_regs.h>
 #include <system.h>
+#include <stdlib.h>
 
+#define true 1
+#define false 0
+
+#define bool unsigned int
+
+// addresses of the different components
 const int hex0 = 0x8005080;
 const int hex1 = 0x8005070;
 const int hex2 = 0x8005020;
 const int hex3 = 0x8005040;
 const int hex4 = 0x8005050;
 const int hex5 = 0x8005060;
+
 const int jtag_uart = 0x80050b0;
 const int key = 0x8005030;
 const int leds = 0x80050a0;
@@ -33,16 +41,15 @@ const int sdram = 0x4000000;
 const int switches = 0x8005090;
 const int timer = 0x8005000;
 
+// global variables
+volatile bool wantToPlayAGame=false;
+volatile bool stopGame=false;
 
-
-volatile bool waiting_reaction=false;
-volatile bool end_time=false;
-volatile bool start_game=false;
-
-volatile float totalTime=0;
 volatile int nbTry=0;
+volatile int totalTime=0;
 
-void separateNumber(int number, int *array)
+// util methods 
+void divideNumberIntoArray(int number, int *array)
 {
   int i = 0;
   int arrayLength = 6;
@@ -98,7 +105,7 @@ int convertTo7segments(int input)
 void displayDecimalNumber(int number)
 {
   int array[6] = {0, 0, 0, 0, 0, 0};
-  separateNumber(number, array);
+  divideNumberIntoArray(number, array);
   IOWR_ALTERA_AVALON_PIO_DATA(hex0, convertTo7segments(array[5]));
   IOWR_ALTERA_AVALON_PIO_DATA(hex1, convertTo7segments(array[4]));
   IOWR_ALTERA_AVALON_PIO_DATA(hex2, convertTo7segments(array[3]));
@@ -107,6 +114,7 @@ void displayDecimalNumber(int number)
   IOWR_ALTERA_AVALON_PIO_DATA(hex5, convertTo7segments(array[0]));
 }
 
+// 7 segments display methods 
 void displayNothing()
 {
   IOWR_ALTERA_AVALON_PIO_DATA(hex0, 0b1111111);
@@ -121,34 +129,6 @@ void display0(){
   displayDecimalNumber(0);
 }
 
-void runC2()
-{
-  displayNothing();
-
-  usleep(1000000);
-
-  for (int k = 0; k <= 9999; k++)
-  {
-    displayDecimalNumber(k);
-    usleep(10000);
-  }
-
-  for (;;)
-  {
-    usleep(100000);
-    displayDecimalNumber(9999);
-    usleep(100000);
-    displayNothing();
-  }
-}
-
-void ledOff()
-{
-  IOWR_ALTERA_AVALON_PIO_DATA(leds, 0b0000000000);
-}
-
-
-// display a binary number as a decimal number on the 7 segments display
 void displayBinaryNumber(int number)
 {
   int value;
@@ -171,8 +151,53 @@ void displayBinaryNumber(int number)
   }
 }
 
-volatile int edge_capture;
 
+// leds
+void ledOff()
+{
+  IOWR_ALTERA_AVALON_PIO_DATA(leds, 0b0000000000);
+}
+
+void ledOn()
+{
+  IOWR_ALTERA_AVALON_PIO_DATA(leds, 0b1111111111);
+}
+
+void oddLedsOn()
+{
+  IOWR_ALTERA_AVALON_PIO_DATA(leds, 0b0101010101);
+}
+
+void evenLedsOn()
+{
+  IOWR_ALTERA_AVALON_PIO_DATA(leds, 0b1010101010);
+} 
+
+// run exercices 
+void runC2()
+{
+  displayNothing();
+
+  usleep(1000000);
+
+  for (int k = 0; k <= 9999; k++)
+  {
+    displayDecimalNumber(k);
+    usleep(10000);
+  }
+
+  for (;;)
+  {
+    usleep(100000);
+    displayDecimalNumber(9999);
+    usleep(100000);
+    displayNothing();
+  }
+}
+
+// capture button presses 
+
+volatile int edge_capture;
 
 static void handle_button_interrupts(void *context, alt_u32 id)
 {
@@ -189,12 +214,11 @@ static void handle_button_interrupts(void *context, alt_u32 id)
 
   //if we push the first button, we start the game
   if(*edge_capture_ptr==1){
-		start_game=true;
+		wantToPlayAGame=true;
   }
   //if we push the second button, we show the average time since the beginning of the game
   else if(*edge_capture_ptr==2){
-		float meanTime=totalTime/nbrTry;
-		print_time_sys(meanTime);
+    displayDecimalNumber(totalTime/nbTry);
 	}
 
   /* Perform the button press handling code here. */
@@ -204,12 +228,12 @@ static void handle_button_interrupts(void *context, alt_u32 id)
   }
   
   //we push the fourth button to play the game
-  else if(*edge_capture_ptr==8 && waiting_reaction){
-		end_time=true;
+  else if(*edge_capture_ptr==8){
+		stopGame=true;
 	}
 
-  displayDecimalNumber(edge_capture);
-  printf("triggered %d", edge_capture);
+  //displayDecimalNumber(edge_capture);
+  //printf("triggered %d\n", edge_capture);
 }
 
 static void init_button_pio()
@@ -225,14 +249,43 @@ static void init_button_pio()
   IOWR_ALTERA_AVALON_PIO_EDGE_CAP(key, 0x0);
 
   /* Register the ISR */
-  alt_irq_register(KEY_IRQ, edge_capture_ptr, handle_button_interrupts);
-  
+  alt_irq_register(KEY_IRQ, edge_capture_ptr, handle_button_interrupts); 
 }
 
 
 void play(){
   nbTry++;
 
+  // wait for a random time between 1 and 5 seconds
+  int randomTime = rand() % 5 + 1;
+  //usleep(randomTime * 1000000);
+  for (int i = 0; i < randomTime; i++)
+  {
+    usleep(500000);
+    evenLedsOn();
+    usleep(500000);
+    oddLedsOn();
+  }
+
+  // save the start time 
+  int start_time = clock();
+  ledOn();
+
+  while (!stopGame)
+  {
+    // wait for the user to press the button
+  }
+  
+  int end_time = clock();
+
+  // display the time
+  int time = end_time - start_time;
+  //printf("time : %d", time);
+  totalTime += time;
+  displayDecimalNumber(time);
+  
+  // clean variables
+  stopGame=false;
 }
 
 int main()
@@ -244,19 +297,20 @@ int main()
 
   init_button_pio();
   
-
-
   for (;;)
   {
+    if (wantToPlayAGame){
+      play();
+      wantToPlayAGame=false;
+    }
     // indiquer le num�ro du bouton press� sur l'afficheur 7 segments
     
-
     // les leds rouges sont allum�es si le switch en face est en position haute
     int switchValue = IORD_ALTERA_AVALON_PIO_DATA(switches); // 10 switches returned as an int
     IOWR_ALTERA_AVALON_PIO_DATA(leds, switchValue);
 
     // cette config des switch est utilis�e pour programmer le temps d'attente de la boucle principale (plus l'utilisateur l�ve le switch, plus le temps d'attente est long)
-    usleep(10000);
+    //usleep(10000);
   }
   return 0;
 }
