@@ -19,7 +19,7 @@
 | OSTaskCreateExt Paramètre | Type |
 |---------------------------|------|
 |task|void(*)(void *pd)|
-|pdata|void*)|
+|pdata|void*|
 |ptos|OS__STK*|
 |prio|INT8U|
 |id|INT16U|
