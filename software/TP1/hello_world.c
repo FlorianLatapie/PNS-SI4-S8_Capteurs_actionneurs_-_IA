@@ -48,6 +48,8 @@ volatile bool stopGame=false;
 volatile int nbTry=0;
 volatile int totalTime=0;
 
+volatile int time = 0;
+
 // util methods 
 void divideNumberIntoArray(int number, int *array)
 {
@@ -224,7 +226,8 @@ static void handle_button_interrupts(void *context, alt_u32 id)
   /* Perform the button press handling code here. */
   //Nothing in particular for the 3rd button
   else if(*edge_capture_ptr==4){
-    IOWR_ALTERA_AVALON_PIO_DATA(hex0, 0b1111111);
+    nbTry=0;
+    totalTime=0;
   }
   
   //we push the fourth button to play the game
@@ -257,8 +260,8 @@ void play(){
   nbTry++;
 
   // wait for a random time between 1 and 5 seconds
-  int randomTime = rand() % 5 + 1;
-  //usleep(randomTime * 1000000);
+  int randomTime = rand() % time + 1;
+  printf("random time : %d\n", randomTime);
   for (int i = 0; i < randomTime; i++)
   {
     usleep(500000);
@@ -307,10 +310,11 @@ int main()
     
     // les leds rouges sont allum�es si le switch en face est en position haute
     int switchValue = IORD_ALTERA_AVALON_PIO_DATA(switches); // 10 switches returned as an int
+    time = IORD_ALTERA_AVALON_PIO_DATA(switches) - 512;
     IOWR_ALTERA_AVALON_PIO_DATA(leds, switchValue);
 
     // cette config des switch est utilis�e pour programmer le temps d'attente de la boucle principale (plus l'utilisateur l�ve le switch, plus le temps d'attente est long)
-    //usleep(10000);
+    usleep(10000);
   }
   return 0;
 }
