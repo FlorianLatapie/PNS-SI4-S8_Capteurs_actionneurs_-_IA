@@ -201,6 +201,18 @@ static void init_button_pio()
   
 }
 
+volatile bool waiting_reaction=false;
+volatile bool end_time=false;
+volatile bool start_game=false;
+
+volatile float totalTime=0;
+volatile int nbTry=0;
+
+void play(){
+  nbTry++;
+  
+}
+
 int main()
 {
   printf("Hello from Nios II!\n");
@@ -214,14 +226,14 @@ int main()
 
   for (;;)
   {
-    // indiquer le numéro du bouton pressé sur l'afficheur 7 segments
+    // indiquer le numï¿½ro du bouton pressï¿½ sur l'afficheur 7 segments
     
 
-    // les leds rouges sont allumées si le switch en face est en position haute
+    // les leds rouges sont allumï¿½es si le switch en face est en position haute
     int switchValue = IORD_ALTERA_AVALON_PIO_DATA(switches); // 10 switches returned as an int
     IOWR_ALTERA_AVALON_PIO_DATA(leds, switchValue);
 
-    // cette config des switch est utilisée pour programmer le temps d'attente de la boucle principale (plus l'utilisateur lève le switch, plus le temps d'attente est long)
+    // cette config des switch est utilisï¿½e pour programmer le temps d'attente de la boucle principale (plus l'utilisateur lï¿½ve le switch, plus le temps d'attente est long)
     usleep(10000);
   }
   return 0;
