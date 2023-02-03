@@ -187,8 +187,27 @@ static void handle_button_interrupts(void *context, alt_u32 id)
   /* Reset the Button's edge capture register. */
   IOWR_ALTERA_AVALON_PIO_EDGE_CAP(key, 0);
 
+  //if we push the first button, we start the game
+  if(*edge_capture_ptr==1){
+		start_game=true;
+  }
+  //if we push the second button, we show the average time since the beginning of the game
+  else if(*edge_capture_ptr==2){
+		float meanTime=totalTime/nbrTry;
+		print_time_sys(meanTime);
+	}
+
   /* Perform the button press handling code here. */
-  IOWR_ALTERA_AVALON_PIO_DATA(hex0, 0b1111111);
+  //Nothing in particular for the 3rd button
+  else if(*edge_capture_ptr==4){
+    IOWR_ALTERA_AVALON_PIO_DATA(hex0, 0b1111111);
+  }
+  
+  //we push the fourth button to play the game
+  else if(*edge_capture_ptr==8 && waiting_reaction){
+		end_time=true;
+	}
+
   displayDecimalNumber(edge_capture);
   printf("triggered %d", edge_capture);
 }
