@@ -6,4 +6,5 @@
 
 ## Rendus de TPs
 
-- [TP1](Rendu/TP1.md)
+- [TP1](Rendu/TP1/TP1.md)
+- [TP2](Rendu/TP2/TP2.md)
