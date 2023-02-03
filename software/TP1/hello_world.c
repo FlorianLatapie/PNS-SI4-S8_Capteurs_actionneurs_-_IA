@@ -310,7 +310,7 @@ int main()
     
     // les leds rouges sont allum�es si le switch en face est en position haute
     int switchValue = IORD_ALTERA_AVALON_PIO_DATA(switches); // 10 switches returned as an int
-    time = IORD_ALTERA_AVALON_PIO_DATA(switches) - 512;
+    time = IORD_ALTERA_AVALON_PIO_DATA(switches) - 511;
     IOWR_ALTERA_AVALON_PIO_DATA(leds, switchValue);
 
     // cette config des switch est utilis�e pour programmer le temps d'attente de la boucle principale (plus l'utilisateur l�ve le switch, plus le temps d'attente est long)

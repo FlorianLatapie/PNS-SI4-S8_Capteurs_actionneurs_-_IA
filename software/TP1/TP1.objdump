@@ -1876,11 +1876,11 @@ int main()
  4000a60:	10942404 	addi	r2,r2,20624
  4000a64:	10800037 	ldwio	r2,0(r2)
  4000a68:	e0bfff15 	stw	r2,-4(fp)
-    time = IORD_ALTERA_AVALON_PIO_DATA(switches) - 512;
+    time = IORD_ALTERA_AVALON_PIO_DATA(switches) - 511;
  4000a6c:	00820034 	movhi	r2,2048
  4000a70:	10942404 	addi	r2,r2,20624
  4000a74:	10800037 	ldwio	r2,0(r2)
- 4000a78:	10bf8004 	addi	r2,r2,-512
+ 4000a78:	10bf8044 	addi	r2,r2,-511
  4000a7c:	d0a6e915 	stw	r2,-25692(gp)
     IOWR_ALTERA_AVALON_PIO_DATA(leds, switchValue);
  4000a80:	00820034 	movhi	r2,2048
