@@ -33,6 +33,15 @@ const int sdram = 0x4000000;
 const int switches = 0x8005090;
 const int timer = 0x8005000;
 
+
+
+volatile bool waiting_reaction=false;
+volatile bool end_time=false;
+volatile bool start_game=false;
+
+volatile float totalTime=0;
+volatile int nbTry=0;
+
 void separateNumber(int number, int *array)
 {
   int i = 0;
@@ -201,16 +210,10 @@ static void init_button_pio()
   
 }
 
-volatile bool waiting_reaction=false;
-volatile bool end_time=false;
-volatile bool start_game=false;
-
-volatile float totalTime=0;
-volatile int nbTry=0;
 
 void play(){
   nbTry++;
-  
+
 }
 
 int main()
