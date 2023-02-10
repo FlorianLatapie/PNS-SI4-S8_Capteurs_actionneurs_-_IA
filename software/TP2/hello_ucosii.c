@@ -365,7 +365,7 @@ void task1(void* pdata)
 	while (1)
 	{
 		if(wantToPlayAGame){
-			OSMboxPost(mailBox1_2, (void *)message);
+			OSMboxPost(mailBox1_2, (void *)message2);
 			OSMboxPend(mailBox3_1, 0, &err);
 			wantToPlayAGame=false;
 			stopGame=false;
@@ -410,7 +410,7 @@ void task3(void* pdata) {
 	char* message="Hello";
 	while (1) {
 		time = (int*)OSQPend(msgQueue, 0, &err);
-		displayDecimalNumber(*time);
+		displayDecimalNumber(time);
 		OSMboxPost(mailBox3_1, (void *)message);
 	}
 
