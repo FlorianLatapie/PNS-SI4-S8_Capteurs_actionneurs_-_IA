@@ -1,4 +1,4 @@
-# A faire en début de TP
+# À faire en début de TP
 
 ## Config du FPGA
 
