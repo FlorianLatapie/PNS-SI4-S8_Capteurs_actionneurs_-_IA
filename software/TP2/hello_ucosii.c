@@ -217,6 +217,7 @@ void runC2()
 // capture button presses 
 
 volatile int edge_capture;
+volatile float averageTime;
 
 static void handle_button_interrupts(void *context, alt_u32 id)
 {
@@ -237,7 +238,9 @@ static void handle_button_interrupts(void *context, alt_u32 id)
 	}
 	//if we push the second button, we show the average time since the beginning of the game
 	else if(*edge_capture_ptr==2){
-		displayDecimalNumber(totalTime/nbTry);
+		averageTime=totalTime/nbTry;
+		//displayDecimalNumber(averageTime);
+		triggerAverage1_3=true;
 	}
 
 	/* Perform the button press handling code here. */
@@ -251,9 +254,6 @@ static void handle_button_interrupts(void *context, alt_u32 id)
 	else if(*edge_capture_ptr==8){
 		stopGame=true;
 	}
-
-	//displayDecimalNumber(edge_capture);
-	//printf("triggered %d\n", edge_capture);
 }
 
 static void init_button_pio()
@@ -272,15 +272,55 @@ static void init_button_pio()
 	alt_irq_register(KEY_IRQ, edge_capture_ptr, handle_button_interrupts);
 }
 
+void play(){
+	nbTry++;
+
+	// wait for a random time between 1 and 5 seconds
+	int randomTime = rand() % time + 1;
+	printf("random time : %d\n", randomTime);
+	for (int i = 0; i < randomTime; i++)
+	{
+		usleep(500000);
+		evenLedsOn();
+		usleep(500000);
+		oddLedsOn();
+	}
+
+	
+	INT32U end;
+	INT32U start=OSTimeGet();
+	ledOn();
+
+	while (!stopGame)
+	{
+		// wait for the user to press the button
+	}
+
+	int end_time = OSTimeGet();
+
+	// display the time
+	int time = end_time - start_time;
+	//printf("time : %d", time);
+	totalTime += time;
+	displayDecimalNumber(time);
+
+	// clean variables
+	stopGame=false;
+
+	OSQPost(msgQueue, (void *)time);
+}
+
 /* Definition of Task Stacks */
 #define   TASK_STACKSIZE       2048
 OS_STK    task1_stk[TASK_STACKSIZE];
 OS_STK    task2_stk[TASK_STACKSIZE];
+OS_STK    task3_stk[TASK_STACKSIZE];
 
 /* Definition of Task Priorities */
 
 #define TASK1_PRIORITY      1
 #define TASK2_PRIORITY      2
+#define TASK3_PRIORITY      3
 
 #define MSG_QUEUE_SIZE 20
 OS_EVENT *msgQueue;
@@ -288,19 +328,45 @@ OS_EVENT *msgQueue_trigger;
 void *msgQueueTbl [20];
 
 OS_EVENT* mailBox1_2;
+OS_EVENT* mailBox3_1;
+
+int OSTmrCtr;
+INT32U taskStartTimestamp;
+
+TASK_USER_DATA_HOME tasks[3];
+
+volatile bool triggerAverage1_3=false;
+
 static int cpt=0;
 
 /* Prints "Hello World" and sleeps for three seconds */
 void task1(void* pdata)
 {
+	INT8U err;
 	char message[30];
+	char* message2 = "Hello";
+	averageTime=0;
 	while (1)
 	{
-		sprintf(message, "%d", cpt);
-		cpt++;
+		if(wantToPlayAGame){
+			OSMboxCreate(mailBox1_2, (void *)message);
+			OSMboxPend(mailBox3_1, 0, &err);
+			wantToPlayAGame=false;
+			stopGame=false;
+			triggerAverage1_3=false;
+		}
+
+		if (triggerAverage1_3)
+		{
+			OSQPost(msgQueue,(void *)&averageTime);
+			OSMboxPend(mailBox3_1, 0, &err);
+			triggerAverage1_3=false;
+		}
+		//sprintf(message, "%d", cpt);
+		//cpt++;
 		//OSMboxPost(mailBox1_2,(void *)message);
-		OSQPost(msgQueue,(void *)message);
-		OSTimeDlyHMSM(0, 0, 2, 0);
+		//OSQPost(msgQueue,(void *)message);
+		//OSTimeDlyHMSM(0, 0, 1, 0);
 	}
 }
 /* Prints "Hello World" and sleeps for three seconds */
@@ -310,20 +376,43 @@ void task2(void* pdata)
 	int message;
 	while (1)
 	{
+		OSMboxPend(mailBox1_2, 0, &err);
+		play();
+
 		//message = atoi(OSMboxPend(mailBox1_2,0,&err));
-		message = atoi(OSQPend(msgQueue,0,&err));
-		displayDecimalNumber(message);
-		OSTimeDlyHMSM(0, 0, 1, 0);
+		//message = atoi(OSQPend(msgQueue,0,&err));
+		//displayDecimalNumber(message);
+		//OSTimeDlyHMSM(0, 0, 1, 0);
 	}
+}
+
+void task3(void* pdata) {
+
+	int* time;
+	INT8U err;
+	char* message="Hello";
+	while (1) {
+		time = (int*)OSQPend(msgQueue, 0, &err);
+		displayDecimalNumber(*time);
+		OSMboxPost(mailBox3_1, (void *)message);
+	}
+
 }
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
-  //mailBox1_2=OSMboxCreate((void *)0);
+
+	averageTime=0;
+	mailBox1_2=OSMboxCreate((void *)0);
+	mailBox3_1=OSMboxCreate((void *)0);
 	msgQueue = OSQCreate(&msgQueueTbl[0],MSG_QUEUE_SIZE);
-	printf("Message queue created\n");
+	printf("Starting C2\n");
 
+	init_button_pio();
 
+	int switchValue = IORD_ALTERA_AVALON_PIO_DATA(switches); // 10 switches returned as an int
+	time = IORD_ALTERA_AVALON_PIO_DATA(switches) - 511;
+	IOWR_ALTERA_AVALON_PIO_DATA(leds, switchValue);
 
 	OSTaskCreateExt(task1,
 			NULL,
