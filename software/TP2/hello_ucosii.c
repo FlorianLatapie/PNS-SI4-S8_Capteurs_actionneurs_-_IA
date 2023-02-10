@@ -347,7 +347,7 @@ void task1(void* pdata)
 
 		if (triggerAverage1_3)
 		{
-			OSQPost(msgQueue,(void *)&averageTime);
+			OSQPost(msgQueue,(int)averageTime);
 			OSMboxPend(mailBox3_1, 0, &err);
 			triggerAverage1_3=false;
 		}
