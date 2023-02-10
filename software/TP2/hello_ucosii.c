@@ -339,7 +339,7 @@ void play(){
 	printf("end : %lu\n", end);
 	printf("start : %lu\n", start);
 
-	float time = (end - start)/1000.0;
+	float time = (end - start)/1.0;
 	//printf("time : %d", time);
 	totalTime += (int)time;
 	displayDecimalNumber(time);
