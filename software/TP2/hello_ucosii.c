@@ -298,8 +298,7 @@ void task1(void* pdata)
 	{
 		sprintf(message, "%d", cpt);
 		cpt++;
-		//OSMboxPost(mailBox1_2, (void *)message);
-    OSQPost(msgQueue,(void *)message);
+		OSQPost(msgQueue,(void *)message);
 		OSTimeDlyHMSM(0, 0, 3, 0);
 	}
 }
@@ -307,23 +306,19 @@ void task1(void* pdata)
 void task2(void* pdata)
 {
 	INT8U err;
-  int message;
+	int message;
 	while (1)
 	{
-    //message = int(OSMboxPend(mailBox1_2, 0, &err));
-    message = int(OSQPend(msgQueue,0,&err));
-    displayDecimalNumber(message);
+		message = atoi(OSQPend(msgQueue,0,&err));
+		displayDecimalNumber(message);
 		OSTimeDlyHMSM(0, 0, 3, 0);
 	}
 }
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
-	//mailBox1_2 = OSMboxCreate((void *)0);
-	//printf("Mailbox created\n");
-
-  MsgQueue = OSQCreate(&MsgQueueTbl[0],MSG_QUEUE_SIZE);
-  printf("Message queue created\n");
+	msgQueue = OSQCreate(&msgQueueTbl[0],MSG_QUEUE_SIZE);
+	printf("Message queue created\n");
 
 
 
