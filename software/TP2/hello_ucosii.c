@@ -227,28 +227,6 @@ void evenLedsOn()
 	IOWR_ALTERA_AVALON_PIO_DATA(leds, 0b1010101010);
 } 
 
-// run exercices 
-void runC2()
-{
-	displayNothing();
-
-	usleep(1000000);
-
-	for (int k = 0; k <= 9999; k++)
-	{
-		displayDecimalNumber(k);
-		usleep(10000);
-	}
-
-	for (;;)
-	{
-		usleep(100000);
-		displayDecimalNumber(9999);
-		usleep(100000);
-		displayNothing();
-	}
-}
-
 // capture button presses 
 
 volatile int edge_capture;
@@ -322,7 +300,7 @@ void play(){
 		oddLedsOn();
 	}
 
-	
+
 	INT32U end;
 	INT32U start=OSTimeGet();
 	ledOn();
@@ -335,9 +313,6 @@ void play(){
 	end = OSTimeGet();
 
 	// display the time
-	// print end and start
-	printf("end : %lu\n", end);
-	printf("start : %lu\n", start);
 
 	float time = (end - start)/1.0;
 	//printf("time : %d", time);
@@ -359,7 +334,6 @@ void play(){
 void task1(void* pdata)
 {
 	INT8U err;
-	char message[30];
 	char* message2 = "Hello";
 	averageTime=0;
 	while (1)
@@ -378,33 +352,21 @@ void task1(void* pdata)
 			OSMboxPend(mailBox3_1, 0, &err);
 			triggerAverage1_3=false;
 		}
-		//sprintf(message, "%d", cpt);
-		//cpt++;
-		//OSMboxPost(mailBox1_2,(void *)message);
-		//OSQPost(msgQueue,(void *)message);
-		//OSTimeDlyHMSM(0, 0, 1, 0);
 	}
 }
 /* Prints "Hello World" and sleeps for three seconds */
 void task2(void* pdata)
 {
 	INT8U err;
-	int message;
 	while (1)
 	{
 		OSMboxPend(mailBox1_2, 0, &err);
 		play();
 		wantToPlayAGame=false;
-
-		//message = atoi(OSMboxPend(mailBox1_2,0,&err));
-		//message = atoi(OSQPend(msgQueue,0,&err));
-		//displayDecimalNumber(message);
-		//OSTimeDlyHMSM(0, 0, 1, 0);
 	}
 }
 
 void task3(void* pdata) {
-
 	int* time;
 	INT8U err;
 	char* message="Hello";
@@ -457,34 +419,3 @@ int main(void)
 	OSStart();
 	return 0;
 }
-
-/******************************************************************************
- *                                                                             *
- * License Agreement                                                           *
- *                                                                             *
- * Copyright (c) 2004 Altera Corporation, San Jose, California, USA.           *
- * All rights reserved.                                                        *
- *                                                                             *
- * Permission is hereby granted, free of charge, to any person obtaining a     *
- * copy of this software and associated documentation files (the "Software"),  *
- * to deal in the Software without restriction, including without limitation   *
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,    *
- * and/or sell copies of the Software, and to permit persons to whom the       *
- * Software is furnished to do so, subject to the following conditions:        *
- *                                                                             *
- * The above copyright notice and this permission notice shall be included in  *
- * all copies or substantial portions of the Software.                         *
- *                                                                             *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  *
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,    *
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE *
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER      *
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING     *
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER         *
- * DEALINGS IN THE SOFTWARE.                                                   *
- *                                                                             *
- * This agreement shall be governed in all respects by the laws of the State   *
- * of California and by the laws of the United States of America.              *
- * Altera does not recommend, suggest or require that this reference design    *
- * file be used in conjunction or combination with any other product.          *
- ******************************************************************************/
