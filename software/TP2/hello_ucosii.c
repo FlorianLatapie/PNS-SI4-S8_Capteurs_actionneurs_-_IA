@@ -34,6 +34,7 @@
 #include <altera_avalon_pio_regs.h>
 #include <system.h>
 #include <stdlib.h>
+#include <os_cfg.h>
 
 #define true 1
 #define false 0
@@ -320,22 +321,29 @@ OS_STK    task2_stk[TASK_STACKSIZE];
 
 
 OS_EVENT* mailBox1_2;
+static int cpt=0;
 
 /* Prints "Hello World" and sleeps for three seconds */
 void task1(void* pdata)
 {
+  char message[30];
   while (1)
   { 
     printf("Hello from task1\n");
+    sprintf(message, "%d", cpt);
+    cpt++;
+    OSMboxPost(mailBox1_2, (void *)message);
     OSTimeDlyHMSM(0, 0, 3, 0);
   }
 }
 /* Prints "Hello World" and sleeps for three seconds */
 void task2(void* pdata)
 {
+  INT8U err;
   while (1)
   { 
     printf("Hello from task2\n");
+    printf("Message received : %s\n", (char *)OSMboxPend(mailBox1_2, 0, &err));
     OSTimeDlyHMSM(0, 0, 3, 0);
   }
 }
@@ -343,6 +351,8 @@ void task2(void* pdata)
 int main(void)
 {
   mailBox1_2 = OSMboxCreate((void *)0);
+  printf("Mailbox created\n");
+
 
   OSTaskCreateExt(task1,
                   NULL,
