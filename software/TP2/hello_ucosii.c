@@ -345,7 +345,10 @@ void play(){
 	// clean variables
 	stopGame=false;
 
-	OSQPost(msgQueue, (void *)time);
+	char message[30];
+
+	sprintf(message, "%d", time);
+	OSQPost(msgQueue, (void *)message);
 }
 
 
