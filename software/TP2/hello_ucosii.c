@@ -68,6 +68,35 @@ volatile int totalTime=0;
 
 volatile int time = 0;
 
+/* Definition of Task Stacks */
+#define   TASK_STACKSIZE       2048
+OS_STK    task1_stk[TASK_STACKSIZE];
+OS_STK    task2_stk[TASK_STACKSIZE];
+OS_STK    task3_stk[TASK_STACKSIZE];
+
+/* Definition of Task Priorities */
+
+#define TASK1_PRIORITY      1
+#define TASK2_PRIORITY      2
+#define TASK3_PRIORITY      3
+
+#define MSG_QUEUE_SIZE 20
+OS_EVENT *msgQueue;
+OS_EVENT *msgQueue_trigger;
+void *msgQueueTbl [20];
+
+OS_EVENT* mailBox1_2;
+OS_EVENT* mailBox3_1;
+
+int OSTmrCtr;
+INT32U taskStartTimestamp;
+
+TASK_USER_DATA_HOME tasks[3];
+
+volatile bool triggerAverage1_3=false;
+
+static int cpt=0;
+
 // util methods 
 void divideNumberIntoArray(int number, int *array)
 {
@@ -272,35 +301,6 @@ static void init_button_pio()
 	alt_irq_register(KEY_IRQ, edge_capture_ptr, handle_button_interrupts);
 }
 
-
-/* Definition of Task Stacks */
-#define   TASK_STACKSIZE       2048
-OS_STK    task1_stk[TASK_STACKSIZE];
-OS_STK    task2_stk[TASK_STACKSIZE];
-OS_STK    task3_stk[TASK_STACKSIZE];
-
-/* Definition of Task Priorities */
-
-#define TASK1_PRIORITY      1
-#define TASK2_PRIORITY      2
-#define TASK3_PRIORITY      3
-
-#define MSG_QUEUE_SIZE 20
-OS_EVENT *msgQueue;
-OS_EVENT *msgQueue_trigger;
-void *msgQueueTbl [20];
-
-OS_EVENT* mailBox1_2;
-OS_EVENT* mailBox3_1;
-
-int OSTmrCtr;
-INT32U taskStartTimestamp;
-
-TASK_USER_DATA_HOME tasks[3];
-
-volatile bool triggerAverage1_3=false;
-
-static int cpt=0;
 
 void play(){
 	nbTry++;
