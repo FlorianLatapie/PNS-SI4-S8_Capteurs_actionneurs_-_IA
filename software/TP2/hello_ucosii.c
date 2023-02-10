@@ -292,13 +292,16 @@ void play(){
 	// wait for a random time between 1 and 5 seconds
 	int randomTime = rand() % time + 1;
 	printf("random time : %d\n", randomTime);
-	for (int i = 0; i < randomTime; i++)
+	
+	int start_time_blink = OSTimeGet();
+	
+	ledOff();
+	while (OSTimeGet() - start_time_blink < randomTime * 1000)
 	{
-		usleep(500000);
-		evenLedsOn();
-		usleep(500000);
-		oddLedsOn();
+		
 	}
+	ledOn();
+	
 
 
 	INT32U end;
@@ -314,19 +317,16 @@ void play(){
 
 	// display the time
 
-	float time = (end - start)/1.0;
+	int time = end - start;
 	//printf("time : %d", time);
 	totalTime += (int)time;
-	displayDecimalNumber(time);
+	//displayDecimalNumber(time);
 
 	// clean variables
 	stopGame=false;
 
-	printf("sent time : %f\n", time);
-	char message[30];
-
-	sprintf(message, "%f", time);
-	OSQPost(msgQueue, (void *)message);
+	OSQPost(msgQueue, (int)time);
+	printf("sent time : %d\n", time);
 }
 
 
@@ -354,6 +354,7 @@ void task1(void* pdata)
 		}
 	}
 }
+
 /* Prints "Hello World" and sleeps for three seconds */
 void task2(void* pdata)
 {
@@ -367,25 +368,25 @@ void task2(void* pdata)
 }
 
 void task3(void* pdata) {
-	int* time;
+	int time;
 	INT8U err;
-	char* message="Hello";
+	int message = 1;
+
 	while (1) {
-		time = (int*)OSQPend(msgQueue, 0, &err);
+		time = (int)OSQPend(msgQueue, 0, &err);
 		displayDecimalNumber(time);
-		OSMboxPost(mailBox3_1, (void *)message);
+		OSMboxPost(mailBox3_1, message);
 	}
 
 }
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
-
 	averageTime=0;
 	mailBox1_2=OSMboxCreate((void *)0);
 	mailBox3_1=OSMboxCreate((void *)0);
 	msgQueue = OSQCreate(&msgQueueTbl[0],MSG_QUEUE_SIZE);
-	printf("Starting C2\n");
+	printf("Starting ...\n");
 
 	displayNothing();
 	ledOff();
@@ -416,6 +417,16 @@ int main(void)
 			TASK_STACKSIZE,
 			NULL,
 			0);
+
+	OSTaskCreateExt(task3,
+				NULL,
+				(void *)&task3_stk[TASK_STACKSIZE-1],
+				TASK3_PRIORITY,
+				TASK3_PRIORITY,
+				task3_stk,
+				TASK_STACKSIZE,
+				NULL,
+				0);
 	OSStart();
 	return 0;
 }
