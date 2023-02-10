@@ -282,6 +282,10 @@ OS_STK    task2_stk[TASK_STACKSIZE];
 #define TASK1_PRIORITY      1
 #define TASK2_PRIORITY      2
 
+#define MSG_QUEUE_SIZE 20
+OS_EVENT *msgQueue;
+OS_EVENT *msgQueue_trigger;
+void *msgQueueTbl [20];
 
 OS_EVENT* mailBox1_2;
 static int cpt=0;
@@ -294,7 +298,8 @@ void task1(void* pdata)
 	{
 		sprintf(message, "%d", cpt);
 		cpt++;
-		OSMboxPost(mailBox1_2, (void *)message);
+		//OSMboxPost(mailBox1_2, (void *)message);
+    OSQPost(msgQueue,(void *)message);
 		OSTimeDlyHMSM(0, 0, 3, 0);
 	}
 }
@@ -305,8 +310,8 @@ void task2(void* pdata)
   int message;
 	while (1)
 	{
-    message = int(OSMboxPend(mailBox1_2, 0, &err));
-		//printf("Message received : %s\n", (char *)OSMboxPend(mailBox1_2, 0, &err));
+    //message = int(OSMboxPend(mailBox1_2, 0, &err));
+    message = int(OSQPend(msgQueue,0,&err));
     displayDecimalNumber(message);
 		OSTimeDlyHMSM(0, 0, 3, 0);
 	}
@@ -316,6 +321,10 @@ int main(void)
 {
 	mailBox1_2 = OSMboxCreate((void *)0);
 	printf("Mailbox created\n");
+
+  MsgQueue = OSQCreate(&MsgQueueTbl[0],MSG_QUEUE_SIZE);
+
+
 
 
 	OSTaskCreateExt(task1,
