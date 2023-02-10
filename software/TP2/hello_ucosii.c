@@ -319,11 +319,11 @@ void task2(void* pdata)
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
-	mailBox1_2 = OSMboxCreate((void *)0);
-	printf("Mailbox created\n");
+	//mailBox1_2 = OSMboxCreate((void *)0);
+	//printf("Mailbox created\n");
 
   MsgQueue = OSQCreate(&MsgQueueTbl[0],MSG_QUEUE_SIZE);
-
+  printf("Message queue created\n");
 
 
 
