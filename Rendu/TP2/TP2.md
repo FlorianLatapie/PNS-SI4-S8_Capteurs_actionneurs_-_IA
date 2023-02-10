@@ -15,7 +15,6 @@
 | ptos                    | OS__STK*          |
 | prio                    | INT8U             |
 
-
 | OSTaskCreateExt Paramètre | Type              |
 |---------------------------|-------------------|
 | task                      | void(*)(void *pd) |
