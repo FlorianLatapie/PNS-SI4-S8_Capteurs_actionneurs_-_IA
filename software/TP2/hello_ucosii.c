@@ -91,6 +91,14 @@ OS_EVENT* mailBox3_1;
 int OSTmrCtr;
 INT32U taskStartTimestamp;
 
+
+typedef struct {
+	char TaskName[30] ;
+	INT16U TaskCtr ;
+	INT16U TaskExecTime ;
+	INT16U TaskTotExecTime;
+} TASK_USER_DATA_HOME;
+
 TASK_USER_DATA_HOME tasks[3];
 
 volatile bool triggerAverage1_3=false;
@@ -351,7 +359,7 @@ void task1(void* pdata)
 	while (1)
 	{
 		if(wantToPlayAGame){
-			OSMboxCreate(mailBox1_2, (void *)message);
+			OSMboxPost(mailBox1_2, (void *)message);
 			OSMboxPend(mailBox3_1, 0, &err);
 			wantToPlayAGame=false;
 			stopGame=false;
