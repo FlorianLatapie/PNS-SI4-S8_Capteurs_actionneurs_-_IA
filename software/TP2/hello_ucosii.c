@@ -103,8 +103,6 @@ TASK_USER_DATA_HOME tasks[3];
 
 volatile bool triggerAverage1_3=false;
 
-static int cpt=0;
-
 // util methods 
 void divideNumberIntoArray(int number, int *array)
 {
@@ -337,6 +335,10 @@ void play(){
 	end = OSTimeGet();
 
 	// display the time
+	// print end and start
+	printf("end : %lu\n", end);
+	printf("start : %lu\n", start);
+
 	float time = (end - start)/1000.0;
 	//printf("time : %d", time);
 	totalTime += (int)time;
@@ -345,9 +347,10 @@ void play(){
 	// clean variables
 	stopGame=false;
 
+	printf("sent time : %f\n", time);
 	char message[30];
 
-	sprintf(message, "%d", time);
+	sprintf(message, "%f", time);
 	OSQPost(msgQueue, (void *)message);
 }
 
