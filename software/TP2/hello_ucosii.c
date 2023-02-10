@@ -334,12 +334,12 @@ void play(){
 		// wait for the user to press the button
 	}
 
-	int end_time = OSTimeGet();
+	end = OSTimeGet();
 
 	// display the time
-	int time = end - start;
+	float time = (end - start)/1000.0;
 	//printf("time : %d", time);
-	totalTime += time;
+	totalTime += (int)time;
 	displayDecimalNumber(time);
 
 	// clean variables
