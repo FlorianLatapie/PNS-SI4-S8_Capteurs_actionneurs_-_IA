@@ -329,7 +329,7 @@ void play(){
 	int end_time = OSTimeGet();
 
 	// display the time
-	int time = end_time - start_time;
+	int time = end - start;
 	//printf("time : %d", time);
 	totalTime += time;
 	displayDecimalNumber(time);
