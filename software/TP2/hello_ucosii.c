@@ -294,16 +294,16 @@ void play(){
 	printf("random time : %d\n", randomTime);
 	
 	int start_time_blink = OSTimeGet();
-	
-	ledOff();
-	while (OSTimeGet() - start_time_blink < randomTime * 1000)
+
+	for (int i = 0; i < randomTime; i++)
 	{
-		
+		int delay = 500;
+		OSTimeDly(delay);
+		evenLedsOn();
+		OSTimeDly(delay);
+		oddLedsOn();
 	}
-	ledOn();
 	
-
-
 	INT32U end;
 	INT32U start=OSTimeGet();
 	ledOn();
@@ -326,7 +326,6 @@ void play(){
 	stopGame=false;
 
 	OSQPost(msgQueue, (int)time);
-	printf("sent time : %d\n", time);
 }
 
 
