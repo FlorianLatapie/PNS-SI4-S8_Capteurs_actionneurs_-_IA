@@ -1961,15 +1961,15 @@ void task1(void* pdata)
  4000960:	d0a72b17 	ldw	r2,-25428(gp)
  4000964:	10800044 	addi	r2,r2,1
  4000968:	d0a72b15 	stw	r2,-25428(gp)
-		//OSMboxPost(mailBox1_2, (void *)message);
-    OSQPost(msgQueue,(void *)message);
+		//OSMboxPost(mailBox1_2,(void *)message);
+		OSQPost(msgQueue,(void *)message);
  400096c:	d0a72f17 	ldw	r2,-25412(gp)
  4000970:	e17ff704 	addi	r5,fp,-36
  4000974:	1009883a 	mov	r4,r2
  4000978:	40127280 	call	4012728 <OSQPost>
-		OSTimeDlyHMSM(0, 0, 3, 0);
+		OSTimeDlyHMSM(0, 0, 2, 0);
  400097c:	000f883a 	mov	r7,zero
- 4000980:	018000c4 	movi	r6,3
+ 4000980:	01800084 	movi	r6,2
  4000984:	000b883a 	mov	r5,zero
  4000988:	0009883a 	mov	r4,zero
  400098c:	40150e00 	call	40150e0 <OSTimeDlyHMSM>
@@ -1987,11 +1987,11 @@ void task2(void* pdata)
  40009a0:	df000304 	addi	fp,sp,12
  40009a4:	e13fff15 	stw	r4,-4(fp)
 	INT8U err;
-  int message;
+	int message;
 	while (1)
 	{
-    //message = int(OSMboxPend(mailBox1_2, 0, &err));
-    message = atoi(OSQPend(msgQueue,0,&err));
+		//message = atoi(OSMboxPend(mailBox1_2,0,&err));
+		message = atoi(OSQPend(msgQueue,0,&err));
  40009a8:	d0a72f17 	ldw	r2,-25412(gp)
  40009ac:	e0fffe04 	addi	r3,fp,-8
  40009b0:	180d883a 	mov	r6,r3
@@ -2001,12 +2001,12 @@ void task2(void* pdata)
  40009c0:	1009883a 	mov	r4,r2
  40009c4:	4000c6c0 	call	4000c6c <atoi>
  40009c8:	e0bffd15 	stw	r2,-12(fp)
-    displayDecimalNumber(message);
+		displayDecimalNumber(message);
  40009cc:	e13ffd17 	ldw	r4,-12(fp)
  40009d0:	40004440 	call	4000444 <displayDecimalNumber>
-		OSTimeDlyHMSM(0, 0, 3, 0);
+		OSTimeDlyHMSM(0, 0, 1, 0);
  40009d4:	000f883a 	mov	r7,zero
- 40009d8:	018000c4 	movi	r6,3
+ 40009d8:	01800044 	movi	r6,1
  40009dc:	000b883a 	mov	r5,zero
  40009e0:	0009883a 	mov	r4,zero
  40009e4:	40150e00 	call	40150e0 <OSTimeDlyHMSM>
@@ -2022,13 +2022,14 @@ int main(void)
  40009f0:	dfc00615 	stw	ra,24(sp)
  40009f4:	df000515 	stw	fp,20(sp)
  40009f8:	df000504 	addi	fp,sp,20
-  msgQueue = OSQCreate(&msgQueueTbl[0],MSG_QUEUE_SIZE);
+  //mailBox1_2=OSMboxCreate((void *)0);
+	msgQueue = OSQCreate(&msgQueueTbl[0],MSG_QUEUE_SIZE);
  40009fc:	01400504 	movi	r5,20
  4000a00:	010100b4 	movhi	r4,1026
  4000a04:	21367304 	addi	r4,r4,-9780
  4000a08:	4011e4c0 	call	4011e4c <OSQCreate>
  4000a0c:	d0a72f15 	stw	r2,-25412(gp)
-  printf("Message queue created\n");
+	printf("Message queue created\n");
  4000a10:	01010074 	movhi	r4,1025
  4000a14:	211eb704 	addi	r4,r4,31452
  4000a18:	4000d440 	call	4000d44 <puts>

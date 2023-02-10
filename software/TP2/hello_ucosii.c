@@ -300,7 +300,7 @@ void task1(void* pdata)
 		cpt++;
 		//OSMboxPost(mailBox1_2,(void *)message);
 		OSQPost(msgQueue,(void *)message);
-		OSTimeDlyHMSM(0, 0, 1, 0);
+		OSTimeDlyHMSM(0, 0, 2, 0);
 	}
 }
 /* Prints "Hello World" and sleeps for three seconds */
@@ -313,7 +313,7 @@ void task2(void* pdata)
 		//message = atoi(OSMboxPend(mailBox1_2,0,&err));
 		message = atoi(OSQPend(msgQueue,0,&err));
 		displayDecimalNumber(message);
-		OSTimeDlyHMSM(0, 0, 5, 0);
+		OSTimeDlyHMSM(0, 0, 1, 0);
 	}
 }
 /* The main function creates two task and starts multi-tasking */
