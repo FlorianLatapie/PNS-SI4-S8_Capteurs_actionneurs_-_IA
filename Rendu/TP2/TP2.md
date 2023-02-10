@@ -26,3 +26,11 @@
 | stk_size                  | INT32U            |
 | pext                      | void*             |
 | opt                       | INT16U            |
+
+### R2. Citer les différents services disponibles dans uCOS
+A faire
+
+
+### R3. Que constatez vous ?
+Quand D1>=D2 il n'y a pas de problème, tous les messages sont bien reçus. En revanche quand D2>D1 tous les messages ne sont pas reçus, et au lieu de recevoir des messages 1 par 1, nous les recevons k par k, avec k>0 et D2 = k * D1.
+
