@@ -388,6 +388,7 @@ void task2(void* pdata)
 	{
 		OSMboxPend(mailBox1_2, 0, &err);
 		play();
+		wantToPlayAGame=false;
 
 		//message = atoi(OSMboxPend(mailBox1_2,0,&err));
 		//message = atoi(OSQPend(msgQueue,0,&err));
@@ -417,6 +418,9 @@ int main(void)
 	mailBox3_1=OSMboxCreate((void *)0);
 	msgQueue = OSQCreate(&msgQueueTbl[0],MSG_QUEUE_SIZE);
 	printf("Starting C2\n");
+
+	displayNothing();
+	ledOff();
 
 	init_button_pio();
 
