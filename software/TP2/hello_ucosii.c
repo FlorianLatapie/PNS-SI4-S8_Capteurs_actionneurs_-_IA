@@ -292,7 +292,6 @@ void task1(void* pdata)
 	char message[30];
 	while (1)
 	{
-		printf("Hello from task1\n");
 		sprintf(message, "%d", cpt);
 		cpt++;
 		OSMboxPost(mailBox1_2, (void *)message);
@@ -303,10 +302,12 @@ void task1(void* pdata)
 void task2(void* pdata)
 {
 	INT8U err;
+  int message;
 	while (1)
 	{
-		printf("Hello from task2\n");
-		printf("Message received : %s\n", (char *)OSMboxPend(mailBox1_2, 0, &err));
+    message = int(OSMboxPend(mailBox1_2, 0, &err));
+		//printf("Message received : %s\n", (char *)OSMboxPend(mailBox1_2, 0, &err));
+    displayDecimalNumber(message);
 		OSTimeDlyHMSM(0, 0, 3, 0);
 	}
 }
