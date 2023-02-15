@@ -28,7 +28,16 @@
 | opt                       | INT16U            |
 
 ### R2. Citer les différents services disponibles dans uCOS
-A faire
+| Services                      | Communication ou Synchronosation ? |
+|-------------------------------|------------------------------------|
+| Sémaphores                    | Sychronisation                     |
+| Files d'attentes (Queue)      | Communication                      |
+| MailBox                       | Communication                      |
+| Signaux                       | Sychronisation                     |
+| Mutexes                       | Sychronisation                     |
+| Rendez-vous                   | Sychronisation                     |
+| Event-Flags                   | Sychronisation                     |
+
 
 
 ### R3. Que constatez vous ?
