@@ -454,18 +454,16 @@ void task4(void* pdata){
 		OSMboxPend(mailBox1_4, 0, &err);
 
 		OSTaskStkChk(1, &p);
-		printf("Task 1 Free: %d\n", p.OSFree);
-		printf("Task 1 Used: %d\n", p.OSUsed)
+		printf("Task 1 Free: %lu\n", p.OSFree);
+		printf("Task 1 Used: %lu\n", p.OSUsed);
 		OSTaskStkChk(2, &p);
-		printf("Task 2: %d\n", p.OSFree);
-		printf("Task 2: %d\n", p.OSUsed);
+		printf("Task 2: %lu\n", p.OSFree);
+		printf("Task 2: %lu\n", p.OSUsed);
 		OSTaskStkChk(3, &p);
-		printf("Task 3: %d\n", p.OSFree);
-		printf("Task 3: %d\n", p.OSUsed);
-		OSTaskStkChk(4, &p);
-		printf("Task 4: %d\n", p.OSFree);
-		printf("Task 4: %d\n", p.OSUsed);
+		printf("Task 3: %lu\n", p.OSFree);
+		printf("Task 3: %lu\n", p.OSUsed);
 
+		OSMboxPost(mailBox1_4, (void *)message);
 
 	}
 }
