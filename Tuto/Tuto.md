@@ -2,6 +2,8 @@
 
 ## Config du FPGA
 
+Avant tout : Vérifiez bien que le switch tout à gauche est sur la position haute !
+
 - Lancer `Nios Il 16.1 Software Build Tools for Eclipse`
 - Aller dans le menu `Nios II` > `Quartus Prime Programmer`
 - Cliquer sur `Auto Detect`
