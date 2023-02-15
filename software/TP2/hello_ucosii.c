@@ -73,12 +73,14 @@ volatile int time = 0;
 OS_STK    task1_stk[TASK_STACKSIZE];
 OS_STK    task2_stk[TASK_STACKSIZE];
 OS_STK    task3_stk[TASK_STACKSIZE];
+OS_STK    task4_stk[TASK_STACKSIZE];
 
 /* Definition of Task Priorities */
 
 #define TASK1_PRIORITY      1
 #define TASK2_PRIORITY      2
 #define TASK3_PRIORITY      3
+#define TASK4_PRIORITY      4
 
 #define MSG_QUEUE_SIZE 20
 OS_EVENT *msgQueue;
@@ -87,69 +89,71 @@ void *msgQueueTbl [20];
 
 OS_EVENT* mailBox1_2;
 OS_EVENT* mailBox3_1;
+OS_EVENT* mailBox1_4;
 
 int OSTmrCtr;
 INT32U taskStartTimestamp;
 
 
-typedef struct {
-	char TaskName[30] ;
-	INT16U TaskCtr ;
-	INT16U TaskExecTime ;
-	INT16U TaskTotExecTime;
-} TASK_USER_DATA;
+// typedef struct {
+// 	char TaskName[30] ;
+// 	INT16U TaskCtr ;
+// 	INT16U TaskExecTime ;
+// 	INT16U TaskTotExecTime;
+// } TASK_USER_DATA_HOME;
 
-void OSTaskCreateHook (OS_TCB *ptcb)
-{
-    ptcb = ptcb;                       /* Prevent compiler warning */
-}
+// TASK_USER_DATA_HOME tasks[3];
 
-void OSTaskDelHook (OS_TCB *ptcb)
-{
-    ptcb = ptcb;                       /* Prevent compiler warning                                     */
-}
-void OSTaskStatHook (void)
-{
-}
-void OSInitHookEnd(void)
-{
-}
-void OSTaskIdleHook(void)
-{
-}
-void OSTCBInitHook(OS_TCB *ptcb)
-{
-}
 
-TASK_USER_DATA_HOME tasks[3];
+// void OSTaskCreateHook (OS_TCB *ptcb)
+// {
+//     ptcb = ptcb;                       /* Prevent compiler warning */
+// }
 
-void OSTaskSwHook(void)
-{
-	INT16U taskStopTimestamp, time;
-	TASK_USER_DATA *puser;
-	taskStopTimestamp = OSTimeGet();
-	time =(taskStopTimestamp - taskStartTimestamp) / (OS_TICKS_PER_SEC / 1000); // in ms
-	puser = OSTCBCur->OSTCBExtPtr;
-	if (puser != (TASK_USER_DATA *)0) {
-		puser->TaskCtr++;
-		puser->TaskExecTime = time;
-		puser->TaskTotExecTime += time;
-	}
-	taskStartTimestamp = OSTimeGet();
-}
-void OSInitHookBegin(void)
-{
-	OSTmrCtr = 0;
-	taskStartTimestamp = OSTimeGet();
-}
-void OSTimeTickHook (void)
-{
-	OSTmrCtr++;
-	if (OSTmrCtr >= (OS_TICKS_PER_SEC / OS_TMR_CFG_TICKS_PER_SEC)) {
-		OSTmrCtr = 0;
-		OSTmrSignal();
-	}
-}
+// void OSTaskDelHook (OS_TCB *ptcb)
+// {
+//     ptcb = ptcb;                       /* Prevent compiler warning                                     */
+// }
+// void OSTaskStatHook (void)
+// {
+// }
+// void OSInitHookEnd(void)
+// {
+// }
+// void OSTaskIdleHook(void)
+// {
+// }
+// void OSTCBInitHook(OS_TCB *ptcb)
+// {
+// }
+
+// void OSTaskSwHook(void)
+// {
+// 	INT16U taskStopTimestamp, time;
+// 	TASK_USER_DATA_HOME *puser;
+// 	taskStopTimestamp = OSTimeGet();
+// 	time =(taskStopTimestamp - taskStartTimestamp) / (OS_TICKS_PER_SEC / 1000); // in ms
+// 	puser = OSTCBCur->OSTCBExtPtr;
+// 	if (puser != (TASK_USER_DATA_HOME *)0) {
+// 		puser->TaskCtr++;
+// 		puser->TaskExecTime = time;
+// 		puser->TaskTotExecTime += time;
+// 	}
+// 	taskStartTimestamp = OSTimeGet();
+// }
+// void OSInitHookBegin(void)
+// {
+// 	OSTmrCtr = 0;
+// 	taskStartTimestamp = OSTimeGet();
+// }
+// void OSTimeTickHook (void)
+// {
+// 	OSTmrCtr++;
+// 	if (OSTmrCtr >= (OS_TICKS_PER_SEC / OS_TMR_CFG_TICKS_PER_SEC)) {
+// 		OSTmrCtr = 0;
+// 		OSTmrSignal();
+// 	}
+// }
 
 volatile bool triggerAverage1_3=false;
 
@@ -435,6 +439,7 @@ int main(void)
 	averageTime=0;
 	mailBox1_2=OSMboxCreate((void *)0);
 	mailBox3_1=OSMboxCreate((void *)0);
+	mailBox1_4=OSMboxCreate((void *)0);
 	msgQueue = OSQCreate(&msgQueueTbl[0],MSG_QUEUE_SIZE);
 	printf("Starting ...\n");
 
@@ -454,8 +459,8 @@ int main(void)
 			TASK1_PRIORITY,
 			task1_stk,
 			TASK_STACKSIZE,
-			NULL,
-			0);
+			&tasks[0],
+            OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
 
 
 	OSTaskCreateExt(task2,
@@ -465,8 +470,8 @@ int main(void)
 			TASK2_PRIORITY,
 			task2_stk,
 			TASK_STACKSIZE,
-			NULL,
-			0);
+			&tasks[1],
+            OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
 
 	OSTaskCreateExt(task3,
 			NULL,
@@ -475,8 +480,18 @@ int main(void)
 			TASK3_PRIORITY,
 			task3_stk,
 			TASK_STACKSIZE,
+			&tasks[2],
+            OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
+
+	OSTaskCreateExt(task4,
 			NULL,
-			0);
+			(void *)&task4_stk[TASK_STACKSIZE-1],
+			TASK4_PRIORITY,
+			TASK4_PRIORITY,
+			task4_stk,
+			TASK_STACKSIZE,
+			NULL,
+			OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
 	OSStart();
 	return 0;
 }
