@@ -95,14 +95,14 @@ int OSTmrCtr;
 INT32U taskStartTimestamp;
 
 
-// typedef struct {
-// 	char TaskName[30] ;
-// 	INT16U TaskCtr ;
-// 	INT16U TaskExecTime ;
-// 	INT16U TaskTotExecTime;
-// } TASK_USER_DATA_HOME;
+typedef struct {
+	char TaskName[30] ;
+	INT16U TaskCtr ;
+	INT16U TaskExecTime ;
+	INT16U TaskTotExecTime;
+} TASK_USER_DATA_HOME;
 
-// TASK_USER_DATA_HOME tasks[3];
+TASK_USER_DATA_HOME tasks[3];
 
 
 // void OSTaskCreateHook (OS_TCB *ptcb)
