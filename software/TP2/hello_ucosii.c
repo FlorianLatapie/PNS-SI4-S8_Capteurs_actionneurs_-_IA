@@ -455,12 +455,23 @@ void task4(void* pdata){
 		OSTaskStkChk(1, &p);
 		printf("Task 1 Free: %lu\n", p.OSFree);
 		printf("Task 1 Used: %lu\n\n", p.OSUsed);
+		printf("TaskCtr: %d \n",tasks[0].TaskCtr);
+		printf("Task exec time: %d ms\n",tasks[0].TaskExecTime);
+		printf("Total exec time: %d ms\n",tasks[0].TaskTotExecTime);
+
 		OSTaskStkChk(2, &p);
 		printf("Task 2 Free: %lu\n", p.OSFree);
 		printf("Task 2 Used: %lu\n\n", p.OSUsed);
+		printf("TaskCtr: %d \n",tasks[1].TaskCtr);
+		printf("Task exec time: %d ms\n",tasks[1].TaskExecTime);
+		printf("Total exec time: %d ms\n",tasks[1].TaskTotExecTime);
+
 		OSTaskStkChk(3, &p);
 		printf("Task 3 Free: %lu\n", p.OSFree);
 		printf("Task 3 Used: %lu\n\n", p.OSUsed);
+		printf("TaskCtr: %d \n",tasks[2].TaskCtr);
+		printf("Task exec time: %d ms\n",tasks[2].TaskExecTime);
+		printf("Total exec time: %d ms\n",tasks[2].TaskTotExecTime);
 
 		OSMboxPost(mailBox1_4, (void *)message);
 
