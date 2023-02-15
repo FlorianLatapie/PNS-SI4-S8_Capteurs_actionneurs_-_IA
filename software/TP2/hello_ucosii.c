@@ -97,7 +97,29 @@ typedef struct {
 	INT16U TaskCtr ;
 	INT16U TaskExecTime ;
 	INT16U TaskTotExecTime;
-} TASK_USER_DATA_HOME;
+} TASK_USER_DATA;
+
+void OSTaskCreateHook (OS_TCB *ptcb)
+{
+    ptcb = ptcb;                       /* Prevent compiler warning */
+}
+
+void OSTaskDelHook (OS_TCB *ptcb)
+{
+    ptcb = ptcb;                       /* Prevent compiler warning                                     */
+}
+void OSTaskStatHook (void)
+{
+}
+void OSInitHookEnd(void)
+{
+}
+void OSTaskIdleHook(void)
+{
+}
+void OSTCBInitHook(OS_TCB *ptcb)
+{
+}
 
 TASK_USER_DATA_HOME tasks[3];
 
