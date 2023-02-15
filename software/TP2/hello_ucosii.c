@@ -106,55 +106,55 @@ typedef struct {
 TASK_USER_DATA_HOME tasks[3];
 
 
-// void OSTaskCreateHook (OS_TCB *ptcb)
-// {
-//     ptcb = ptcb;                       /* Prevent compiler warning */
-// }
+void OSTaskCreateHook (OS_TCB *ptcb)
+{
+    //ptcb = ptcb;
+}
 
-// void OSTaskDelHook (OS_TCB *ptcb)
-// {
-//     ptcb = ptcb;                       /* Prevent compiler warning                                     */
-// }
-// void OSTaskStatHook (void)
-// {
-// }
-// void OSInitHookEnd(void)
-// {
-// }
-// void OSTaskIdleHook(void)
-// {
-// }
-// void OSTCBInitHook(OS_TCB *ptcb)
-// {
-// }
+void OSTaskDelHook (OS_TCB *ptcb)
+{
+    //ptcb = ptcb;
+}
+void OSTaskStatHook (void)
+{
+}
+void OSInitHookEnd(void)
+{
+}
+void OSTaskIdleHook(void)
+{
+}
+void OSTCBInitHook(OS_TCB *ptcb)
+{
+}
 
-// void OSTaskSwHook(void)
-// {
-// 	INT16U taskStopTimestamp, time;
-// 	TASK_USER_DATA_HOME *puser;
-// 	taskStopTimestamp = OSTimeGet();
-// 	time =(taskStopTimestamp - taskStartTimestamp) / (OS_TICKS_PER_SEC / 1000); // in ms
-// 	puser = OSTCBCur->OSTCBExtPtr;
-// 	if (puser != (TASK_USER_DATA_HOME *)0) {
-// 		puser->TaskCtr++;
-// 		puser->TaskExecTime = time;
-// 		puser->TaskTotExecTime += time;
-// 	}
-// 	taskStartTimestamp = OSTimeGet();
-// }
-// void OSInitHookBegin(void)
-// {
-// 	OSTmrCtr = 0;
-// 	taskStartTimestamp = OSTimeGet();
-// }
-// void OSTimeTickHook (void)
-// {
-// 	OSTmrCtr++;
-// 	if (OSTmrCtr >= (OS_TICKS_PER_SEC / OS_TMR_CFG_TICKS_PER_SEC)) {
-// 		OSTmrCtr = 0;
-// 		OSTmrSignal();
-// 	}
-// }
+void OSTaskSwHook(void)
+{
+	INT16U taskStopTimestamp, time;
+	TASK_USER_DATA_HOME *puser;
+	taskStopTimestamp = OSTimeGet();
+	time =(taskStopTimestamp - taskStartTimestamp) / (OS_TICKS_PER_SEC / 1000); // in ms
+	puser = OSTCBCur->OSTCBExtPtr;
+	if (puser != (TASK_USER_DATA_HOME *)0) {
+		puser->TaskCtr++;
+		puser->TaskExecTime = time;
+		puser->TaskTotExecTime += time;
+	}
+	taskStartTimestamp = OSTimeGet();
+}
+void OSInitHookBegin(void)
+{
+	OSTmrCtr = 0;
+	taskStartTimestamp = OSTimeGet();
+}
+void OSTimeTickHook (void)
+{
+	OSTmrCtr++;
+	if (OSTmrCtr >= (OS_TICKS_PER_SEC / OS_TMR_CFG_TICKS_PER_SEC)) {
+		OSTmrCtr = 0;
+		OSTmrSignal();
+	}
+}
 
 volatile bool triggerAverage1_3=false;
 
