@@ -106,12 +106,10 @@ typedef struct {
 
 TASK_USER_DATA_HOME tasks[3];
 
-
 void OSTaskCreateHook (OS_TCB *ptcb)
 {
     ptcb = ptcb;                       /* Prevent compiler warning */
 }
-
 void OSTaskDelHook (OS_TCB *ptcb)
 {
     ptcb = ptcb;                       /* Prevent compiler warning                                     */
@@ -123,6 +121,10 @@ void OSTaskIdleHook(void)
 {
 }
 void OSTCBInitHook(OS_TCB *ptcb)
+{
+}
+
+void OSInitHookEnd()
 {
 }
 
