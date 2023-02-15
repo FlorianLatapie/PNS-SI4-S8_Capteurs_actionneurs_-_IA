@@ -2,7 +2,7 @@
 
 ## Tuto comment installer l'OS sur le FPGA Intel Nios II
 
-[Tuto](Tuto/Tuto.md)
+[Tuto : displayDecimalNumber](Tuto/Tuto.md)
 
 ## Rendus de TPs
 
