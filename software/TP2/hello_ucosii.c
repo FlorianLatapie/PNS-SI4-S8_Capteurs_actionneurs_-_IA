@@ -349,8 +349,6 @@ void play(){
 	int randomTime = rand() % time + 1;
 	printf("random time : %d\n", randomTime);
 
-	int start_time_blink = OSTimeGet();
-
 	for (int i = 0; i < randomTime; i++)
 	{
 		int delay = 500;
@@ -447,7 +445,6 @@ void task3(void* pdata) {
 
 void task4(void* pdata){
 	INT8U err;
-	char* message = "message";
 	static OS_STK_DATA p;
 
 	while(1){
