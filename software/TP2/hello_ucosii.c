@@ -347,6 +347,7 @@ void play(){
 
 	// wait for a random time between 1 and 5 seconds
 	int randomTime = rand() % time + 1;
+	printf("switch time : %d\n", time);
 	printf("random time : %d\n", randomTime);
 
 	for (int i = 0; i < randomTime; i++)
@@ -453,13 +454,13 @@ void task4(void* pdata){
 
 		OSTaskStkChk(1, &p);
 		printf("Task 1 Free: %lu\n", p.OSFree);
-		printf("Task 1 Used: %lu\n", p.OSUsed);
+		printf("Task 1 Used: %lu\n\n", p.OSUsed);
 		OSTaskStkChk(2, &p);
 		printf("Task 2 Free: %lu\n", p.OSFree);
-		printf("Task 2 Used: %lu\n", p.OSUsed);
+		printf("Task 2 Used: %lu\n\n", p.OSUsed);
 		OSTaskStkChk(3, &p);
 		printf("Task 3 Free: %lu\n", p.OSFree);
-		printf("Task 3 Used: %lu\n", p.OSUsed);
+		printf("Task 3 Used: %lu\n\n", p.OSUsed);
 
 		OSMboxPost(mailBox1_4, (void *)message);
 
