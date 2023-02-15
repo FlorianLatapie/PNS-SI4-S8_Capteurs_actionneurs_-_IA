@@ -101,41 +101,43 @@ typedef struct {
 	INT16U TaskCtr ;
 	INT16U TaskExecTime ;
 	INT16U TaskTotExecTime;
-} TASK_USER_DATA_HOME;
+} TASK_USER_DATA;
 
-TASK_USER_DATA_HOME tasks[3];
+TASK_USER_DATA tasks[3];
 
 
-void OSTaskCreateHook (OS_TCB *ptcb)
-{
-    ptcb = ptcb;
-}
+// void OSTaskCreateHook (OS_TCB *ptcb)
+// {
+//     ptcb = ptcb;                       /* Prevent compiler warning */
+// }
 
-void OSTaskDelHook (OS_TCB *ptcb)
-{
-    ptcb = ptcb;
-}
-void OSTaskStatHook (void)
-{
-}
-void OSInitHookEnd(void)
-{
-}
-void OSTaskIdleHook(void)
-{
-}
-void OSTCBInitHook(OS_TCB *ptcb)
-{
-}
+// void OSTaskDelHook (OS_TCB *ptcb)
+// {
+//     ptcb = ptcb;                       /* Prevent compiler warning                                     */
+// }
+// void OSTaskStatHook (void)
+// {
+// }
+// void OSInitHookEnd(void)
+// {
+// }
+// void OSTaskIdleHook(void)
+// {
+// }
+// void OSTCBInitHook(OS_TCB *ptcb)
+// {
+// }
 
 void OSTaskSwHook(void)
 {
 	INT16U taskStopTimestamp, time;
-	TASK_USER_DATA_HOME *puser;
+	TASK_USER_DATA
+ *puser;
 	taskStopTimestamp = OSTimeGet();
 	time =(taskStopTimestamp - taskStartTimestamp) / (OS_TICKS_PER_SEC / 1000); // in ms
 	puser = OSTCBCur->OSTCBExtPtr;
-	if (puser != (TASK_USER_DATA_HOME *)0) {
+	if (puser != (TASK_USER_DATA
+ *)0) {
 		puser->TaskCtr++;
 		puser->TaskExecTime = time;
 		puser->TaskTotExecTime += time;
