@@ -557,7 +557,7 @@
  */
 
 #define OS_ARG_CHK_EN 1
-#define OS_CPU_HOOKS_EN 1
+#define OS_CPU_HOOKS_EN 0
 #define OS_DEBUG_EN 1
 #define OS_EVENT_NAME_SIZE 32
 #define OS_FLAGS_NBITS 16

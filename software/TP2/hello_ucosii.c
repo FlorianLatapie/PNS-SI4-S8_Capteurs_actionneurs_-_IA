@@ -119,9 +119,6 @@ void OSTaskDelHook (OS_TCB *ptcb)
 void OSTaskStatHook (void)
 {
 }
-void OSInitHookEnd(void)
-{
-}
 void OSTaskIdleHook(void)
 {
 }
@@ -537,7 +534,7 @@ int main(void)
 			task4_stk,
 			TASK_STACKSIZE,
 			NULL,
-			OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
+			OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR | OS_CPU_HOOKS_EN);
 	OSStart();
 	OSInitHookEnd();
 
