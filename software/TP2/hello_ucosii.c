@@ -106,6 +106,28 @@ typedef struct {
 TASK_USER_DATA_HOME tasks[3];
 
 
+void OSTaskCreateHook (OS_TCB *ptcb)
+{
+    ptcb = ptcb;
+}
+
+void OSTaskDelHook (OS_TCB *ptcb)
+{
+    ptcb = ptcb;
+}
+void OSTaskStatHook (void)
+{
+}
+void OSInitHookEnd(void)
+{
+}
+void OSTaskIdleHook(void)
+{
+}
+void OSTCBInitHook(OS_TCB *ptcb)
+{
+}
+
 void OSTaskSwHook(void)
 {
 	INT16U taskStopTimestamp, time;
@@ -458,6 +480,7 @@ void task4(void* pdata){
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
+	OSInitHookBegin();
 	averageTime=0;
 	mailBox1_2=OSMboxCreate((void *)0);
 	mailBox3_1=OSMboxCreate((void *)0);
@@ -515,5 +538,7 @@ int main(void)
 			NULL,
 			OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
 	OSStart();
+	OSInitHookEnd();
+
 	return 0;
 }
