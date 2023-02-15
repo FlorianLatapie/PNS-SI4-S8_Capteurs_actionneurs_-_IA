@@ -62,6 +62,7 @@ const int timer = 0x8005000;
 // global variables
 volatile bool wantToPlayAGame=false;
 volatile bool stopGame=false;
+volatile bool triggerCounter=false;
 
 volatile int nbTry=0;
 volatile int totalTime=0;
@@ -313,8 +314,9 @@ static void handle_button_interrupts(void *context, alt_u32 id)
 	/* Perform the button press handling code here. */
 	//Nothing in particular for the 3rd button
 	else if(*edge_capture_ptr==4){
-		nbTry=0;
-		totalTime=0;
+		triggerCounter=true;
+		// nbTry=0;
+		// totalTime=0;
 	}
 
 	//we push the fourth button to play the game
@@ -397,6 +399,7 @@ void task1(void* pdata)
 			wantToPlayAGame=false;
 			stopGame=false;
 			triggerAverage1_3=false;
+			triggerCounter=false;
 		}
 
 		if (triggerAverage1_3)
@@ -404,6 +407,14 @@ void task1(void* pdata)
 			OSQPost(msgQueue,(int)averageTime);
 			OSMboxPend(mailBox3_1, 0, &err);
 			triggerAverage1_3=false;
+			triggerCounter=false;
+		}
+
+		if(triggerCounter){
+			OSMboxPost(mailBox1_4, (void *)message2);
+			OSMboxPend(mailBox1_4, 0, &err);
+			triggerAverage1_3=false;
+			triggerCounter=false;
 		}
 	}
 }
@@ -436,10 +447,26 @@ void task3(void* pdata) {
 
 void task4(void* pdata){
 	INT8U err;
+	char* message = "message";
+	static OS_STK_DATA p;
+
 	while(1){
 		OSMboxPend(mailBox1_4, 0, &err);
-		ledOff();
-		displayNothing();
+
+		OSTaskStkChk(1, &p);
+		printf("Task 1 Free: %d\n", p.OSFree);
+		printf("Task 1 Used: %d\n", p.OSUsed)
+		OSTaskStkChk(2, &p);
+		printf("Task 2: %d\n", p.OSFree);
+		printf("Task 2: %d\n", p.OSUsed);
+		OSTaskStkChk(3, &p);
+		printf("Task 3: %d\n", p.OSFree);
+		printf("Task 3: %d\n", p.OSUsed);
+		OSTaskStkChk(4, &p);
+		printf("Task 4: %d\n", p.OSFree);
+		printf("Task 4: %d\n", p.OSUsed);
+
+
 	}
 }
 /* The main function creates two task and starts multi-tasking */
