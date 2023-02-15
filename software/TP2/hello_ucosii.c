@@ -433,6 +433,15 @@ void task3(void* pdata) {
 	}
 
 }
+
+void task4(void* pdata){
+	INT8U err;
+	while(1){
+		OSMboxPend(mailBox1_4, 0, &err);
+		ledOff();
+		displayNothing();
+	}
+}
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
