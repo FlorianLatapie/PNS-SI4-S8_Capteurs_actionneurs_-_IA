@@ -103,30 +103,30 @@ TASK_USER_DATA_HOME tasks[3];
 
 void OSTaskSwHook(void)
 {
-INT16U taskStopTimestamp, time;
-TASK_USER_DATA *puser;
-taskStopTimestamp = OSTimeGet();
-time =(taskStopTimestamp - taskStartTimestamp) / (OS_TICKS_PER_SEC / 1000); // in ms
-puser = OSTCBCur->OSTCBExtPtr;
-if (puser != (TASK_USER_DATA *)0) {
-puser->TaskCtr++;
-puser->TaskExecTime = time;
-puser->TaskTotExecTime += time;
-}
-taskStartTimestamp = OSTimeGet();
+	INT16U taskStopTimestamp, time;
+	TASK_USER_DATA *puser;
+	taskStopTimestamp = OSTimeGet();
+	time =(taskStopTimestamp - taskStartTimestamp) / (OS_TICKS_PER_SEC / 1000); // in ms
+	puser = OSTCBCur->OSTCBExtPtr;
+	if (puser != (TASK_USER_DATA *)0) {
+		puser->TaskCtr++;
+		puser->TaskExecTime = time;
+		puser->TaskTotExecTime += time;
+	}
+	taskStartTimestamp = OSTimeGet();
 }
 void OSInitHookBegin(void)
 {
-OSTmrCtr = 0;
-taskStartTimestamp = OSTimeGet();
+	OSTmrCtr = 0;
+	taskStartTimestamp = OSTimeGet();
 }
 void OSTimeTickHook (void)
 {
-OSTmrCtr++;
-if (OSTmrCtr >= (OS_TICKS_PER_SEC / OS_TMR_CFG_TICKS_PER_SEC)) {
-OSTmrCtr = 0;
-OSTmrSignal();
-}
+	OSTmrCtr++;
+	if (OSTmrCtr >= (OS_TICKS_PER_SEC / OS_TMR_CFG_TICKS_PER_SEC)) {
+		OSTmrCtr = 0;
+		OSTmrSignal();
+	}
 }
 
 volatile bool triggerAverage1_3=false;
@@ -320,7 +320,7 @@ void play(){
 	// wait for a random time between 1 and 5 seconds
 	int randomTime = rand() % time + 1;
 	printf("random time : %d\n", randomTime);
-	
+
 	int start_time_blink = OSTimeGet();
 
 	for (int i = 0; i < randomTime; i++)
@@ -331,7 +331,7 @@ void play(){
 		OSTimeDly(delay);
 		oddLedsOn();
 	}
-	
+
 	INT32U end;
 	INT32U start=OSTimeGet();
 	ledOn();
@@ -447,14 +447,14 @@ int main(void)
 			0);
 
 	OSTaskCreateExt(task3,
-				NULL,
-				(void *)&task3_stk[TASK_STACKSIZE-1],
-				TASK3_PRIORITY,
-				TASK3_PRIORITY,
-				task3_stk,
-				TASK_STACKSIZE,
-				NULL,
-				0);
+			NULL,
+			(void *)&task3_stk[TASK_STACKSIZE-1],
+			TASK3_PRIORITY,
+			TASK3_PRIORITY,
+			task3_stk,
+			TASK_STACKSIZE,
+			NULL,
+			0);
 	OSStart();
 	return 0;
 }
