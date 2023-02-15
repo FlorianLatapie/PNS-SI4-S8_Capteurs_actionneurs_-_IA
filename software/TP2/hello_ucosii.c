@@ -447,6 +447,7 @@ void task4(void* pdata){
 	INT8U err;
 	static OS_STK_DATA p;
 
+	char* message = "message";
 	while(1){
 		OSMboxPend(mailBox1_4, 0, &err);
 
@@ -454,11 +455,11 @@ void task4(void* pdata){
 		printf("Task 1 Free: %lu\n", p.OSFree);
 		printf("Task 1 Used: %lu\n", p.OSUsed);
 		OSTaskStkChk(2, &p);
-		printf("Task 2: %lu\n", p.OSFree);
-		printf("Task 2: %lu\n", p.OSUsed);
+		printf("Task 2 Free: %lu\n", p.OSFree);
+		printf("Task 2 Used: %lu\n", p.OSUsed);
 		OSTaskStkChk(3, &p);
-		printf("Task 3: %lu\n", p.OSFree);
-		printf("Task 3: %lu\n", p.OSUsed);
+		printf("Task 3 Free: %lu\n", p.OSFree);
+		printf("Task 3 Used: %lu\n", p.OSUsed);
 
 		OSMboxPost(mailBox1_4, (void *)message);
 
