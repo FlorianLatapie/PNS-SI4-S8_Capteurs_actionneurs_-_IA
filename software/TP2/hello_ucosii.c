@@ -373,6 +373,7 @@ void task3(void* pdata) {
 
 	while (1) {
 		time = (int)OSQPend(msgQueue, 0, &err);
+		ledOff();
 		displayDecimalNumber(time);
 		OSMboxPost(mailBox3_1, message);
 	}
