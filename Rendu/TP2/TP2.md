@@ -31,12 +31,14 @@
 | Services                      | Communication ou Synchronosation ? |
 |-------------------------------|------------------------------------|
 | Sémaphores                    | Sychronisation                     |
-| Files d'attentes (Queue)      | Communication                      |
-| MailBox                       | Communication                      |
 | Signaux                       | Sychronisation                     |
 | Mutexes                       | Sychronisation                     |
 | Rendez-vous                   | Sychronisation                     |
 | Event-Flags                   | Sychronisation                     |
+| Files d'attentes (Queue)      | Communication                      |
+| MailBox                       | Communication                      |
+| Management de la mémoire      | Communication                      |
+| Portage μC/OS-II              | Communication                      |
 
 
 
