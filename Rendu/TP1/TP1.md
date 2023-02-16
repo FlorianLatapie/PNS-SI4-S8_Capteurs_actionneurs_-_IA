@@ -3,6 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
+
 # TP1 Capteurs / Actionneurs
 
 - Tom Bevan
@@ -16,7 +17,6 @@ output:
   - [Programmation des interruptions](#programmation-des-interruptions)
     - [R3 Rappeler les avantages et inconvénients de chaque méthode](#r3-rappeler-les-avantages-et-inconvénients-de-chaque-méthode)
     - [R4 À quoi sert les préfixes suivants, souvent utilisés en embarqué : volatile sur la variable d'état des boutons poussoirs, static sur la routine d'interruption ?](#r4-à-quoi-sert-les-préfixes-suivants-souvent-utilisés-en-embarqué--volatile-sur-la-variable-détat-des-boutons-poussoirs-static-sur-la-routine-dinterruption-)
-
 
 ## 1. Gestion des périphériques
 

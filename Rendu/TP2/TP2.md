@@ -1,13 +1,11 @@
 ---
+title: "TP2 Capteurs / Actionneurs"
+author: "Tom Bevan, Vinh Faucher, Florian Latapie"
+date: "2023-02-17"
 output:
   pdf_document: default
   html_document: default
 ---
-# TP2 Capteurs / Actionneurs
-
-- Tom Bevan
-- Vinh Faucher
-- Florian Latapie
 
 ## 1. Création de tâches
 
