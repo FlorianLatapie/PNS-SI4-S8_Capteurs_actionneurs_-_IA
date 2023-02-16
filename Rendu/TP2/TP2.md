@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # TP2 Capteurs / Actionneurs
 
 - Tom Bevan
@@ -39,7 +44,7 @@
 | Files d'attentes (Queue) | Communication                      |
 | MailBox                  | Communication                      |
 | Management de la mémoire | Communication                      |
-| Portage μC/OS-II         | Communication                      |
+| Portage uC/OS-II         | Communication                      |
 
 ### R3. Que constatez vous ?
 
