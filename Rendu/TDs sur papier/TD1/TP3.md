@@ -110,3 +110,31 @@ i = 3 \Rightarrow T_0 = \sum_{i=1}^{3} C_i = 8 \Rightarrow W_3(0) = 8; &W_3(8) =
 $$
 
 $\Rightarrow W_3(20) < T_3 = 30$ on peut en conclure que le théorème de la zone critique est vérifié. Donc l'ordonnancement est correct.
+
+## Exercice 2 – Politique EDF
+
+On considère à présent 3 tâches T1(5,12), T2(2,6) et T3(5,24).
+Calculer le taux d'utilisation. Concluez sur l’ordonnancabilité.
+Déterminer le nombre d’unités de temps libre sur la période totale d’ordonnancement.
+Dessinez sur cette période d’étude le séquencement généré par EDF d’abord en mode préemptif puis en mode non-préemptif.
+Quelle seraient les caractéristiques maximum (temps d’exécution et fréquence) d’une tâche apériodique à exécuter en plus de ces 3 tâches pour que le système reste ordonnancable ?
+
+| | C | T |
+|---|---|---|
+| T1 | 5 | 12 |
+| T2 | 2 | 6 |
+| T3 | 5 | 24 |
+
+$$
+\begin{align}
+U &= \frac{5}{12} + \frac{2}{6} + \frac{5}{24} &\leq &1 \\
+&= 0.42 + 0.33 + 0.21 &\leq &1 \\
+&= 0.96 &\leq &1 \\
+\end{align}
+$$
+
+**hyper période :** la plus grande période des tâches périodiques
+
+Il y a 1 unité de temps libre sur la période totale d'ordonnancement car nous avons une hyper période de 24.
+
+![diagramme non preemptif et preemptif](./diagrammes-td1_ex2.drawio.png)
