@@ -38,11 +38,13 @@ output:
 | Signaux                  | Synchronisation                    |
 | Mutexes                  | Synchronisation                    |
 | Rendez-vous              | Synchronisation                    |
+| Change de contexte       | Synchronisation                    |
 | Event-Flags              | Synchronisation                    |
 | Files d'attentes (Queue) | Communication                      |
 | MailBox                  | Communication                      |
 | Management de la mémoire | Communication                      |
 | Portage uC/OS-II         | Communication                      |
+| Ordonnancement           | Communication                      |
 
 ### R3. Que constatez vous ?
 
