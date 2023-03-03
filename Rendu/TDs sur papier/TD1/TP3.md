@@ -45,6 +45,8 @@ c.
 non préemptif : si on commence une tache on la finit sans interruption
 
 ![diagramme non preemptif et preemptif](./diagrammes-td1_ex1_c.drawio.png)
+Vert = non préemptif  
+Rouge = préemptif
 
 d.
 
@@ -57,6 +59,7 @@ U &= \frac{1}{5} + \frac{2}{10} + \frac{7}{29} + \frac{2}{15} &\leq &4(2^{\frac{
 $$
 
 ![diagramme non preemptif](./diagrammes-td1_ex1_d.drawio.png)
+Rouge = préemptif
 
 e.
 
@@ -78,6 +81,7 @@ $\Rightarrow$ Faux
 On peut tenter un ordonnancement sans garantie qu'il soit correct
 
 ![diagramme non preemptif](./diagrammes-td1_ex1_e.drawio.png)
+Rouge = préemptif
 
 f.
 
@@ -138,3 +142,64 @@ $$
 Il y a 1 unité de temps libre sur la période totale d'ordonnancement car nous avons une hyper période de 24.
 
 ![diagramme non preemptif et preemptif](./diagrammes-td1_ex2.drawio.png)
+Vert = non préemptif
+Rouge = préemptif
+
+# TD2 d’ordonnancement temps réel
+
+## Exercice 3 - Comparaison d'ordonnancements
+
+Soient deux tâches T1 et T2 définies par les paramètres suivants : S = 0, P1 = 8, P2 = 10, C1 = 4 et C2 = 5.
+Les délais critiques sont égaux aux périodes (soient ∀ i : Di = Pi ).
+
+- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par EDF (en mode  préemptif). Existe il des échéances manquées ?
+- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par un algorithme à priorités fixes RM (en mode préemptif). Existe il des échéances manquées ?
+- Concluez
+
+EDF:
+
+$$
+\begin{align}
+U &= \frac{4}{8} + \frac{5}{10} &\leq &1 \\
+&= 0.5 + 0.5 &\leq &1 \\
+&= 1 &\leq &1 \\
+\end{align}
+$$
+
+|    | C | (D)  | P  |
+|----|---|------|----|
+| T1 | 4 | (8)  | 8  |
+| T2 | 5 | (10) | 10 |
+
+RMS :
+
+$$
+\begin{align}
+U &= \sum_{i=1}^{n} \frac{C_i}{T_i} &\leq n(2^{\frac{1}{n}} - 1) \\
+&= \frac{4}{8} + \frac{5}{10} &\leq 2(2^{\frac{1}{2}} - 1) \\
+&= 0.5 + 0.5 &\leq 0.828 \\
+&= 1 &\leq 0.828 \\
+\end{align}
+$$
+Faux
+
+![diagramme non preemptif et preemptif](./diagrammes-td2_ex3.drawio.png)
+Vert = EDF
+Rouge = RMS
+
+À l'unité de temps 10, la tâche devrait s'être exécuté pendant 5 unité de temps, hors elle n'en a fait que 4, nous avons donc des échéances manquées.
+
+## Exercice 4 - Politique LLF
+
+Soient trois tâches T1(1,8), T2(2,4) et T3(4,10).
+Les délais critiques sont égaux aux périodes (soient $\forall i : D_i = P_i $).
+
+- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par RMS (en mode préemptif). Existe il des échéances manquées ?
+- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par un algorithme à LLF (en mode préemptif). Existe il des échéances manquées ?
+- Concluez
+
+![LLF & RMS](./diagrammes-td2_ex4.drawio.png)
+
+Pour RMS :
+
+À l'unité de temps 10, la tâche $T_3$ devrait s'être exécuté pendant 4 unité de temps, hors elle n'en a fait que 3, nous avons donc des échéances manquées.
