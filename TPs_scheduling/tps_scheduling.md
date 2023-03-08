@@ -181,6 +181,7 @@ U &= \sum_{i=1}^{n} \frac{C_i}{T_i} &\leq n(2^{\frac{1}{n}} - 1) \\
 &= 1 &\leq 0.828 \\
 \end{align}
 $$
+
 Faux
 
 ![diagramme non preemptif et preemptif](./diagrammes-td2_ex3.drawio.png)
