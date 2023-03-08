@@ -10,13 +10,13 @@ Soit les trois tâches indépendantes, prêtes à la date t=0 :
 
 En considérant une politique d’ordonnancement RMS :
 
-1. Rappeler la condition d’ordonnancement (préemptif) de cette politique.
-2. Calculer le taux d'utilisation du processeur, que peut-on en conclure sur l’ordonnancabilité ?
-3. Donner un schéma du séquencement des tâches sur 30 unités de temps dans le cas préemptif puis dans le cas non-préemptif. Quelle conclusion peut-on faire sur ce jeu de tâches ?
-4. On considère une tâche supplémentaire T4(2,15). Refaire l’analyse précédente dans le cas préemptif uniquement.
-5. On modifie maintenant le système en ne considérant que les tâches T1, T2 et T3 en modifiant T1(3, 5), T2(3,10) et T2(2,30). Le jeu de tâches est dit « harmonique » car les périodes sont multiples. Reprenez l’analyse en mode préemptif.
-6. Que déduisez-vous de la condition d’ordonnancement RMS ?
-7. Appliquer le théorème de la zone critique pour vérifier ce constat.
+- a. Rappeler la condition d’ordonnancement (préemptif) de cette politique.
+- b. Calculer le taux d'utilisation du processeur, que peut-on en conclure sur l’ordonnancabilité ?
+- c. Donner un schéma du séquencement des tâches sur 30 unités de temps dans le cas préemptif puis dans le cas non-préemptif. Quelle conclusion peut-on faire sur ce jeu de tâches ?
+- d. On considère une tâche supplémentaire T4(2,15). Refaire l’analyse précédente dans le cas préemptif uniquement.
+- e. On modifie maintenant le système en ne considérant que les tâches T1, T2 et T3 en modifiant T1(3, 5), T2(3,10) et T2(2,30). Le jeu de tâches est dit « harmonique » car les périodes sont multiples. Reprenez l’analyse en mode préemptif.
+- f. Que déduisez-vous de la condition d’ordonnancement RMS ?
+- g. Appliquer le théorème de la zone critique pour vérifier ce constat.
 
 ### Réponses exercice 1
 
@@ -76,6 +76,7 @@ U &= \frac{3}{5} + \frac{3}{10} + \frac{2}{30} &\leq &3(2^{\frac{1}{3}}-1) \\
 &= 0.96 &\leq &0.78 \\
 \end{align}
 $$
+
 $\Rightarrow$ Faux
 
 On peut tenter un ordonnancement sans garantie qu'il soit correct
@@ -88,6 +89,8 @@ f.
 J'en déduis que la condition d'ordonnancement RMS est valide alors on peut tenter un ordonnancement avec garantie qu'il soit correct.
 
 g.
+
+Théorème de la zone critique
 
 Formule : $W_j(n) = \sum_{i=1}^{j} C_i \times \left \lceil\frac{T}{T_i} \right \rceil$
 
