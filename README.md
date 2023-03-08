@@ -11,4 +11,4 @@
 
 ## TPs scheduling
 
-- [TPs_Scheduling](TPs_Scheduling/TPs_Scheduling.md)
+- [TPs_Scheduling](./TPs_scheduling/tps_scheduling.md)
