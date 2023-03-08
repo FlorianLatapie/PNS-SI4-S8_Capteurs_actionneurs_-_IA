@@ -203,3 +203,19 @@ Les délais critiques sont égaux aux périodes (soient $\forall i : D_i = P_i $
 Pour RMS :
 
 À l'unité de temps 10, la tâche $T_3$ devrait s'être exécuté pendant 4 unité de temps, hors elle n'en a fait que 3, nous avons donc des échéances manquées.
+
+## Exercice 5 - Partage de ressources
+
+Dans cet exercice, on souhaite montrer l’impact d’une inversion de priorité sur l’ordonnancement d’un jeu de tâches.
+
+Soient trois tâches définies par les paramètres suivants :  
+S1 = S2 = S3 = 0, P1 = 6, C1 = 2, P2 = 8,C2 = 2, P3 = 12 et C3 = 5.
+
+Les délais critiques sont égaux aux périodes (soient $D_i = P_i$).
+
+On utilise un algorithme à priorité fixe RM pour ordonnancer les tâches (mode préemptif).
+
+Les tâches T1 et T3 se partagent une ressource qu’elles accèdent en exclusion mutuelle. T1 accède à la ressource durant la deuxième unité de temps de sa capacité. T3 accède à la ressource durant la totalité de sa capacité.
+
+- Dessinez sur la période d’étude l’ordonnancement généré par un algorithme à priorité fixe RM. Vous indiquerez les moments d’accès exclusif à la ressource ainsi que le moment où l’inversion de priorité intervient
+- On suppose que l’on utilise la méthode d’héritage simple : une tâche qui bloque une autre plus prioritaire qu’elle, exécute la section critique avec la priorité de la tâche bloquée. Cette méthode d’héritage s’appele aussi PIP pour Priority Inheritance Protocol. Redessinez l’ordonnancement sur la période d’étude et indiquez le moment sur le graphe où l’inversion de priorité est évitée.
