@@ -265,6 +265,12 @@ Les tâches T1 et T3 se partagent une ressource qu’elles accèdent en exclusio
 
 ### Réponse exercice 5
 
+|    | C | P  |
+|----|---|----|
+| T1 | 2 | 6  |
+| T2 | 2 | 8  |
+| T3 | 5 | 12 |
+
 #### Sans inversion de priorité
 
 ![image](./diagrammes-td2_ex5_1.drawio.png)
