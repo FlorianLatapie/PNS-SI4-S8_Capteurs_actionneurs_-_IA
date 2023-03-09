@@ -20,9 +20,9 @@ En considérant une politique d’ordonnancement RMS :
 
 ### Réponses exercice 1
 
-| | C | P |
-|---|---|---|
-| T1 | 1 | 5 |
+|    | C | P  |
+|----|---|----|
+| T1 | 1 | 5  |
 | T2 | 2 | 10 |
 | T3 | 7 | 29 |
 | T4 | 2 | 15 |
@@ -41,12 +41,13 @@ U &= \frac{1}{5} + \frac{2}{10} + \frac{7}{29} &\leq &3(2^{\frac{1}{3}}-1) \\
 \end{align}
 $$
 
+$\Rightarrow$ Vrai
+
 c.
 non préemptif : si on commence une tache on la finit sans interruption
 
-![diagramme non preemptif et preemptif](./diagrammes-td1_ex1_c.drawio.png)
-Vert = non préemptif  
-Rouge = préemptif
+![image](./diagrammes-td1_ex1_c.drawio.png)
+On peut en conclure que le système est ordonnancable uniquement en mode préemptif, sinon la tache 1 ne peut pas faire sa seconde période.
 
 d.
 
@@ -58,14 +59,16 @@ U &= \frac{1}{5} + \frac{2}{10} + \frac{7}{29} + \frac{2}{15} &\leq &4(2^{\frac{
 \end{align}
 $$
 
-![diagramme non preemptif](./diagrammes-td1_ex1_d.drawio.png)
+$\Rightarrow$ Faux
+
+![image](./diagrammes-td1_ex1_d.drawio.png)
 Rouge = préemptif
 
 e.
 
-| | C | P |
-|---|---|---|
-| T1 | 3 | 5 |
+|    | C | P  |
+|----|---|----|
+| T1 | 3 | 5  |
 | T2 | 3 | 10 |
 | T3 | 2 | 30 |
 
@@ -81,12 +84,11 @@ $\Rightarrow$ Faux
 
 On peut tenter un ordonnancement sans garantie qu'il soit correct
 
-![diagramme non preemptif](./diagrammes-td1_ex1_e.drawio.png)
-Rouge = préemptif
+![image](./diagrammes-td1_ex1_e.drawio.png)
 
 f.
 
-J'en déduis que la condition d'ordonnancement RMS est valide alors on peut tenter un ordonnancement avec garantie qu'il soit correct.
+J'en déduis que la condition d'ordonnancement RMS est valide alors on peut tenter un ordonnancement avec garantie qu'il soit correct. Mais le fait que la condition ne soit pas vérifiée ne veut pas dire qu'il n'y a pas d'ordonnancement possible.
 
 g.
 
@@ -121,9 +123,13 @@ $\Rightarrow W_3(20) < T_3 = 30$ on peut en conclure que le théorème de la zon
 ## Exercice 2 – Politique EDF
 
 On considère à présent 3 tâches T1(5,12), T2(2,6) et T3(5,24).
+
 Calculer le taux d'utilisation. Concluez sur l’ordonnancabilité.
+
 Déterminer le nombre d’unités de temps libre sur la période totale d’ordonnancement.
+
 Dessinez sur cette période d’étude le séquencement généré par EDF d’abord en mode préemptif puis en mode non-préemptif.
+
 Quelle seraient les caractéristiques maximum (temps d’exécution et fréquence) d’une tâche apériodique à exécuter en plus de ces 3 tâches pour que le système reste ordonnancable ?
 
 | | C | T |
@@ -144,9 +150,7 @@ $$
 
 Il y a 1 unité de temps libre sur la période totale d'ordonnancement car nous avons une hyper période de 24.
 
-![diagramme non preemptif et preemptif](./diagrammes-td1_ex2.drawio.png)
-Vert = non préemptif
-Rouge = préemptif
+![image](./diagrammes-td1_ex2.drawio.png)
 
 # TD2 d’ordonnancement temps réel
 
