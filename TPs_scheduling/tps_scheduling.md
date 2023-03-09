@@ -1,5 +1,24 @@
 # TD1 d’ordonnancement temps réel
 
+- [TD1 d’ordonnancement temps réel](#td1-dordonnancement-temps-réel)
+  - [Exercice 1 - Politique RMS](#exercice-1---politique-rms)
+    - [Réponses exercice 1](#réponses-exercice-1)
+  - [Exercice 2 – Politique EDF](#exercice-2--politique-edf)
+    - [Réponse exercice 2](#réponse-exercice-2)
+- [TD2 d’ordonnancement temps réel](#td2-dordonnancement-temps-réel)
+  - [Exercice 3 - Comparaison d'ordonnancements](#exercice-3---comparaison-dordonnancements)
+    - [Réponse exercice 3](#réponse-exercice-3)
+      - [EDF](#edf)
+      - [RMS](#rms)
+  - [Exercice 4 - Politique LLF](#exercice-4---politique-llf)
+    - [Réponse exercice 4](#réponse-exercice-4)
+      - [Pour RMS](#pour-rms)
+      - [Pour LLF](#pour-llf)
+  - [Exercice 5 - Partage de ressources](#exercice-5---partage-de-ressources)
+    - [Réponse exercice 5](#réponse-exercice-5)
+      - [Sans inversion de priorité](#sans-inversion-de-priorité)
+      - [Avec inversion de priorité](#avec-inversion-de-priorité)
+
 ## Exercice 1 - Politique RMS
 
 Soit les trois tâches indépendantes, prêtes à la date t=0 :
@@ -132,10 +151,12 @@ Dessinez sur cette période d’étude le séquencement généré par EDF d’ab
 
 Quelle seraient les caractéristiques maximum (temps d’exécution et fréquence) d’une tâche apériodique à exécuter en plus de ces 3 tâches pour que le système reste ordonnancable ?
 
-| | C | T |
-|---|---|---|
+### Réponse exercice 2
+
+|    | C | T  |
+|----|---|----|
 | T1 | 5 | 12 |
-| T2 | 2 | 6 |
+| T2 | 2 | 6  |
 | T3 | 5 | 24 |
 
 $$
@@ -156,14 +177,25 @@ Il y a 1 unité de temps libre sur la période totale d'ordonnancement car nous 
 
 ## Exercice 3 - Comparaison d'ordonnancements
 
-Soient deux tâches T1 et T2 définies par les paramètres suivants : S = 0, P1 = 8, P2 = 10, C1 = 4 et C2 = 5.
-Les délais critiques sont égaux aux périodes (soient ∀ i : Di = Pi ).
+Soient deux tâches T1 et T2 définies par les paramètres suivants :  
+S = 0, P1 = 8, P2 = 10, C1 = 4 et C2 = 5.
 
-- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par EDF (en mode  préemptif). Existe il des échéances manquées ?
-- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par un algorithme à priorités fixes RM (en mode préemptif). Existe il des échéances manquées ?
+Les délais critiques sont égaux aux périodes (soient $\forall i : D_i = P_i$).
+
+- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par EDF (en mode  préemptif).  
+  Existe il des échéances manquées ?
+- Dessinez sur les 24 premières unités de temps l’ordonnancement généré par un algorithme à priorités fixes RM (en mode préemptif).  
+  Existe il des échéances manquées ?
 - Concluez
 
-EDF:
+### Réponse exercice 3
+
+|    | C | P  |
+|----|---|----|
+| T1 | 4 | 8  |
+| T2 | 5 | 10 |
+
+#### EDF
 
 $$
 \begin{align}
@@ -173,12 +205,11 @@ U &= \frac{4}{8} + \frac{5}{10} &\leq &1 \\
 \end{align}
 $$
 
-|    | C | (D)  | P  |
-|----|---|------|----|
-| T1 | 4 | (8)  | 8  |
-| T2 | 5 | (10) | 10 |
+$\Rightarrow$ Vrai
 
-RMS :
+![image](./diagrammes-td2_ex3_edf.drawio.png)
+
+#### RMS
 
 $$
 \begin{align}
@@ -189,11 +220,9 @@ U &= \sum_{i=1}^{n} \frac{C_i}{T_i} &\leq n(2^{\frac{1}{n}} - 1) \\
 \end{align}
 $$
 
-Faux
+$\Rightarrow$ Faux
 
-![diagramme non preemptif et preemptif](./diagrammes-td2_ex3.drawio.png)
-Vert = EDF
-Rouge = RMS
+![image](./diagrammes-td2_ex3_rm.drawio.png)
 
 À l'unité de temps 10, la tâche devrait s'être exécuté pendant 5 unité de temps, hors elle n'en a fait que 4, nous avons donc des échéances manquées.
 
@@ -206,11 +235,17 @@ Les délais critiques sont égaux aux périodes (soient $\forall i : D_i = P_i$)
 - Dessinez sur les 24 premières unités de temps l’ordonnancement généré par un algorithme à LLF (en mode préemptif). Existe il des échéances manquées ?
 - Concluez
 
-![LLF & RMS](./diagrammes-td2_ex4.drawio.png)
+### Réponse exercice 4
 
-Pour RMS :
+#### Pour RMS
+
+![image](./diagrammes-td2_ex4_rm.drawio.png)
 
 À l'unité de temps 10, la tâche $T_3$ devrait s'être exécuté pendant 4 unité de temps, hors elle n'en a fait que 3, nous avons donc des échéances manquées.
+
+#### Pour LLF
+
+![image](./diagrammes-td2_ex4_llf.drawio.png)
 
 ## Exercice 5 - Partage de ressources
 
@@ -228,8 +263,12 @@ Les tâches T1 et T3 se partagent une ressource qu’elles accèdent en exclusio
 - Dessinez sur la période d’étude l’ordonnancement généré par un algorithme à priorité fixe RM. Vous indiquerez les moments d’accès exclusif à la ressource ainsi que le moment où l’inversion de priorité intervient
 - On suppose que l’on utilise la méthode d’héritage simple : une tâche qui bloque une autre plus prioritaire qu’elle, exécute la section critique avec la priorité de la tâche bloquée. Cette méthode d’héritage s’appele aussi PIP pour Priority Inheritance Protocol. Redessinez l’ordonnancement sur la période d’étude et indiquez le moment sur le graphe où l’inversion de priorité est évitée.
 
-Sans l'inversion de priorité :
+### Réponse exercice 5
+
+#### Sans inversion de priorité
+
 ![image](./diagrammes-td2_ex5_1.drawio.png)
 
-Avec l'inversion de priorité :
+#### Avec inversion de priorité
+
 ![image](./diagrammes-td2_ex5_2.drawio.png)
