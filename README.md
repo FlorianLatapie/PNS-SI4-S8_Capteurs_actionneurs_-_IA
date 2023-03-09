@@ -2,7 +2,7 @@
 
 ## Tuto comment installer l'OS sur le FPGA Intel Nios II
 
-[Tuto](Tuto/Tuto.md)
+[Le tuto](Tuto/Tuto.md)
 
 ## Rendus de TPs
 
