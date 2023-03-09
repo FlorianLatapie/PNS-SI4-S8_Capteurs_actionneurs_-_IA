@@ -9,6 +9,6 @@
 - [TP1](Rendu/TP1/TP1.md)
 - [TP2](Rendu/TP2/TP2.md)
 
-## TPs scheduling
+## TDs scheduling
 
-- [TPs_Scheduling](./TPs_scheduling/tps_scheduling.md)
+- [TDs Scheduling (1 & 2)](./TPs_scheduling/tps_scheduling.md)
