@@ -196,7 +196,7 @@ Rouge = RMS
 ## Exercice 4 - Politique LLF
 
 Soient trois tâches T1(1,8), T2(2,4) et T3(4,10).
-Les délais critiques sont égaux aux périodes (soient $\forall i : D_i = P_i $).
+Les délais critiques sont égaux aux périodes (soient $\forall i : D_i = P_i$).
 
 - Dessinez sur les 24 premières unités de temps l’ordonnancement généré par RMS (en mode préemptif). Existe il des échéances manquées ?
 - Dessinez sur les 24 premières unités de temps l’ordonnancement généré par un algorithme à LLF (en mode préemptif). Existe il des échéances manquées ?
