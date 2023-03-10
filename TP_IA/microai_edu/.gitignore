@@ -8,3 +8,5 @@
 # Generated C model and compiled inference engine
 uci-har_*
 polyhar_*
+
+.idea
