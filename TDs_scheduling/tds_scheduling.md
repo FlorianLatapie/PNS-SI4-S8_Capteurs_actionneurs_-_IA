@@ -118,17 +118,17 @@ Formule : $W_j(n) = \sum_{i=1}^{j} C_i \times \left \lceil\frac{T}{T_i} \right \
 $$
 \begin{align}
 &i=1 \Rightarrow &W_1(0) = 3* \left \lceil\frac{0}{5} \right \rceil = 3 \\
-&&W_1(3) = 3* \left \lceil\frac{3}{5} \right \rceil = 3 &\text{ ok}\\
+                &&W_1(3) = 3* \left \lceil\frac{3}{5} \right \rceil = 3 &\text{ ok}\\
 \\
 &i=2 \Rightarrow &W_2(0) = 3* \left \lceil\frac{0}{5} \right \rceil + 3* \left \lceil\frac{0}{10} \right \rceil = 6 \\
-&&W_2(6) = 3* \left \lceil\frac{6}{5} \right \rceil + 3* \left \lceil\frac{6}{10} \right \rceil = 9 \\
-&&W_2(9) = 3* \left \lceil\frac{9}{5} \right \rceil + 3* \left \lceil\frac{9}{10} \right \rceil = 9 &\text{ ok}\\
+                &&W_2(6) = 3* \left \lceil\frac{6}{5} \right \rceil + 3* \left \lceil\frac{6}{10} \right \rceil = 9 \\
+                &&W_2(9) = 3* \left \lceil\frac{9}{5} \right \rceil + 3* \left \lceil\frac{9}{10} \right \rceil = 9 &\text{ ok}\\
 \\
-&i=3 \Rightarrow &W_3(0) = 3* \left \lceil\frac{0}{5} \right \rceil + 3* \left \lceil\frac{0}{10} \right \rceil + 2* \left \lceil\frac{0}{30} \right \rceil = 8 \\
-&&W_3(8)  = 3* \left \lceil\frac{8}{5}  \right \rceil + 3* \left \lceil\frac{8}{10}  \right \rceil + 2* \left \lceil\frac{8}{30} \right \rceil = 11 \\
-&&W_3(11) = 3* \left \lceil\frac{11}{5} \right \rceil + 3* \left \lceil\frac{11}{10} \right \rceil + 2* \left \lceil\frac{11}{30} \right \rceil = 11 \\
-&&W_3(17) = 3* \left \lceil\frac{17}{5} \right \rceil + 3* \left \lceil\frac{17}{10} \right \rceil + 2* \left \lceil\frac{17}{30} \right \rceil = 20 \\
-&&W_3(20) = 3* \left \lceil\frac{20}{5} \right \rceil + 3* \left \lceil\frac{20}{10} \right \rceil + 2* \left \lceil\frac{20}{30} \right \rceil = 20 &\text{ ok}\\
+&i=3 \Rightarrow &W_3(0)  = 3* \left \lceil\frac{0}{5}  \right \rceil + 3* \left \lceil\frac{0}{10}  \right \rceil + 2* \left \lceil\frac{0}{30}  \right \rceil = 8 \\
+                &&W_3(8)  = 3* \left \lceil\frac{8}{5}  \right \rceil + 3* \left \lceil\frac{8}{10}  \right \rceil + 2* \left \lceil\frac{8}{30}  \right \rceil = 11 \\
+                &&W_3(11) = 3* \left \lceil\frac{11}{5} \right \rceil + 3* \left \lceil\frac{11}{10} \right \rceil + 2* \left \lceil\frac{11}{30} \right \rceil = 11 \\
+                &&W_3(17) = 3* \left \lceil\frac{17}{5} \right \rceil + 3* \left \lceil\frac{17}{10} \right \rceil + 2* \left \lceil\frac{17}{30} \right \rceil = 20 \\
+                &&W_3(20) = 3* \left \lceil\frac{20}{5} \right \rceil + 3* \left \lceil\frac{20}{10} \right \rceil + 2* \left \lceil\frac{20}{30} \right \rceil = 20 &\text{ ok}\\
 \end{align}
 $$
 
