@@ -56,13 +56,11 @@ array has dimensions [MODEL_INPUT_SAMPLES][MODEL_INPUT_CHANNELS] and the inputs 
 dimensions [MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES]. In your code you must make sure
 you convert the value in the correct order.
      */
-
-    for (int channel = 0; channel < MODEL_INPUT_CHANNELS; channel++) {
-        for (int sample = 0; sample < MODEL_INPUT_SAMPLES; sample++) {
-            inputs[channel][sample] = finputs[sample][channel];
+    for(int i=0; i<MODEL_INPUT_CHANNELS; i++){
+        for(int j=0; j<MODEL_INPUT_SAMPLES; j++){
+            inputs[i][j] = finputs[j*MODEL_INPUT_CHANNELS + i];
         }
     }
-    
 
   digitalWrite(PIN_LED, HIGH);
   // Run inference
