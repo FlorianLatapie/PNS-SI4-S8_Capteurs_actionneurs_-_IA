@@ -351,9 +351,10 @@ void cnn(
 
   //TODO: Fill model layer calls chain
 
-    conv1d(input, activations1.conv1d_output);
-    flatten(activations1.conv1d_output, activations1.flatten_output);
-    dense(activations1.flatten_output, dense_output);
+    conv1d(input,conv1d_kernel,conv1d_bias,activations1.conv1d_output)
+            flatten(activations1.conv1d_output,activations1.flatten_output)
+    dense(activations1.flatten_output,dense_bias,dense_kernel,dense_output)
 
-    
+
+
 }
