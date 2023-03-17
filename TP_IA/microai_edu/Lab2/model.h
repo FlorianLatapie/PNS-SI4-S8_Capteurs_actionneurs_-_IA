@@ -238,17 +238,19 @@ static inline void dense(
 
   //TODO: Fill algorithm for Fully Connected layer computation
 
-    long_number_t tmp[FC_UNITS];
-    for (int i = 0; i < FC_UNITS; i++) {
-        tmp[i] = 0;
-        for (int j = 0; j < INPUT_SAMPLES; j++) {
-            tmp[i] += input[j] * kernel[i][j];
+    for (int i = 0; i < FC_UNITS; i++)
+    {
+        long_number_t output_acc = 0;
+        for (int j = 0; j < INPUT_SAMPLES; j++)
+        {
+            output_acc += input[j] * kernel[i][j];
         }
-        output[i] = clamp_to_number_t(scale_number_t(tmp[i]) + bias[i]);
+        output_acc = scale_number_t(output_acc);
+        output_acc = output_acc + bias[i];
+        output_acc = clamp_to_number_t(output_acc);
+        output[i] = output_acc;
     }
-
-
-
+    
 
 
 }
@@ -348,9 +350,9 @@ void cnn(
     * 3) One Dense layer
     */
 
-    conv1d(input, activations1.conv1d_output);
+    conv1d(input, conv1d_kernel, conv1d_bias, activations1.conv1d_output);
     flatten(activations1.conv1d_output, activations1.flatten_output);
-    dense(activations1.flatten_output, dense_output);
+    dense(activations1.flatten_output, dense_kernel, dense_bias, dense_output);
 
 
 }

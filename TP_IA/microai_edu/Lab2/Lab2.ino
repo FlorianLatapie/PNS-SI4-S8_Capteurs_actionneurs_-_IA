@@ -63,10 +63,14 @@ dimensions [MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES]. In your code you must ma
 you convert the value in the correct order.
      */
 
-    for (int i = 0; i < MODEL_INPUT_SAMPLES * MODEL_INPUT_CHANNELS; i++) {
-        int col = i / MODEL_INPUT_CHANNELS;
-        int row = i % MODEL_INPUT_CHANNELS;
-        inputs[col][row] = clamp_to_number_t(finputs[i] * (1 << FIXED_POINT));
+    for (int i = 0; i < MODEL_INPUT_CHANNELS; i++)
+    {
+        for (int j = 0; j < MODEL_INPUT_SAMPLES; j++)
+        {
+            float temp = finputs[j * MODEL_INPUT_CHANNELS + i];
+            long_number_t long_temp = temp * (1 << FIXED_POINT);
+            inputs[i][j] = clamp_to_number_t(long_temp);
+        }
     }
 
   digitalWrite(PIN_LED, HIGH);
