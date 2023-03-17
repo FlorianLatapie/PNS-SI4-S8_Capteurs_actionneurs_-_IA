@@ -65,7 +65,7 @@ you convert the value in the correct order.
 
     for (int i = 0; i < MODEL_INPUT_SAMPLES * MODEL_INPUT_CHANNELS; i++) {
         int col = i / MODEL_INPUT_CHANNELS;
-        int row = j % MODEL_INPUT_CHANNELS;
+        int row = i % MODEL_INPUT_CHANNELS;
         inputs[col][rol] = clamp_to_number_t(finputs[i] * (1 << FIXED_POINT));
     }
 
