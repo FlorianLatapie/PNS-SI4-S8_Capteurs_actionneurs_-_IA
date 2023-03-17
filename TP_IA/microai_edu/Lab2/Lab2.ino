@@ -49,12 +49,20 @@ void loop() {
   }
 
   //TODO: Convert inputs from floating-point to fixed-point
-    for (int i = 0; i < MODEL_INPUT_SAMPLES; i++) {
-        for (int j = 0; j < MODEL_INPUT_CHANNELS; j++) {
-        inputs[j][i] = (number_t) finputs[i*MODEL_INPUT_CHANNELS + j];
+    /*
+     * Warning: the data is received in channels_last format (TensorFlow/Keras convention), while the C
+inference code expects the data in channels_first format (PyTorch convention). Therefore, the finputs
+array has dimensions [MODEL_INPUT_SAMPLES][MODEL_INPUT_CHANNELS] and the inputs array has
+dimensions [MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES]. In your code you must make sure
+you convert the value in the correct order.
+     */
+
+    for (int channel = 0; channel < MODEL_INPUT_CHANNELS; channel++) {
+        for (int sample = 0; sample < MODEL_INPUT_SAMPLES; sample++) {
+            inputs[channel][sample] = finputs[sample][channel];
         }
     }
-
+    
 
   digitalWrite(PIN_LED, HIGH);
   // Run inference
