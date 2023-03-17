@@ -49,6 +49,12 @@ void loop() {
   }
 
   //TODO: Convert inputs from floating-point to fixed-point
+    for (int i = 0; i < MODEL_INPUT_SAMPLES; i++) {
+        for (int j = 0; j < MODEL_INPUT_CHANNELS; j++) {
+        inputs[j][i] = (number_t) finputs[i*MODEL_INPUT_CHANNELS + j];
+        }
+    }
+
 
   digitalWrite(PIN_LED, HIGH);
   // Run inference
