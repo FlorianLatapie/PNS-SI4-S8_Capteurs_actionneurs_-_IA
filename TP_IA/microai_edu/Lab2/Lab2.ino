@@ -50,16 +50,23 @@ void loop() {
 
   //TODO: Convert inputs from floating-point to fixed-point
     /*
+     * With such a fixed representation the real value 2-9 becomes the integer 1, 2-8 the integer 2, 2-7 the
+integer 4...
+So, for each input, your conversion code has to multiply the real data by 29. The floating point result of
+this multiplication has then to be converted in integer in the type long_number_t. Then this long integer
+value is clamped in our working representation (16 bits) with the clamp_to_number_t() function already
+used previously.
      * Warning: the data is received in channels_last format (TensorFlow/Keras convention), while the C
 inference code expects the data in channels_first format (PyTorch convention). Therefore, the finputs
 array has dimensions [MODEL_INPUT_SAMPLES][MODEL_INPUT_CHANNELS] and the inputs array has
 dimensions [MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES]. In your code you must make sure
 you convert the value in the correct order.
      */
-    for(int i=0; i<MODEL_INPUT_CHANNELS; i++){
-        for(int j=0; j<MODEL_INPUT_SAMPLES; j++){
-            inputs[i][j] = finputs[j*MODEL_INPUT_CHANNELS + i];
-        }
+
+    for (int i = 0; i < MODEL_INPUT_SAMPLES * MODEL_INPUT_CHANNELS; i++) {
+        int col = i / MODEL_INPUT_CHANNELS;
+        int row = j % MODEL_INPUT_CHANNELS;
+        inputs[col][rol] = clamp_to_number_t(finputs[i * (1 << FIXED_POINT));
     }
 
   digitalWrite(PIN_LED, HIGH);
