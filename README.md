@@ -19,10 +19,10 @@
 
 [Le tuto](Tuto/Tuto.md)
 
-## Rendus de TPs
+## TPs
 
-- [TP1](Rendu/TP1/TP1.md)
-- [TP2](Rendu/TP2/TP2.md)
+- [Sujet TP1](./Rendu/TP1/%C3%89nonc%C3%A9/TP1_peripheriques_2022.pdf) ([en](./Rendu/TP1/%C3%89nonc%C3%A9/Lab1_Peripherals_2022.pdf)),[rendu TP1](Rendu/TP1/TP1.md)
+- [Sujet TP2](./Rendu/TP2/%C3%89nonc%C3%A9/TP2_uCOS.pdf) ([en](./Rendu/TP2/%C3%89nonc%C3%A9/Lab2_RTOS_en.pdf)), [rendu TP2](Rendu/TP2/TP2.md)
 
 ## TDs scheduling
 
