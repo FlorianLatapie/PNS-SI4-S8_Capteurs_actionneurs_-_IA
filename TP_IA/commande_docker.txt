@@ -1,0 +1,1 @@
+docker.exe run -it --rm --name jupyter-tensorflow -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v $((pwd).tostring()+"/microai_edu:/home/jovyan/work") jupyter/tensorflow-notebook
