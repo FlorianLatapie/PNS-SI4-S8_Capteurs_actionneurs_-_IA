@@ -250,7 +250,7 @@ static inline void dense(
         output_acc = clamp_to_number_t(output_acc);
         output[i] = output_acc;
     }
-    
+
 
 
 }
