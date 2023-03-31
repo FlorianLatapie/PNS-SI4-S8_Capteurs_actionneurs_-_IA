@@ -1,3 +1,7 @@
+extern "C" {
+#include "model.h"
+}
+
 #include <ICM_20948.h>                      // https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary
 
 #define SAMPLE_RATE 20
