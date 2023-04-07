@@ -44,6 +44,9 @@ void setup() {
 void loop() {
     // Try to respect sampling rate
     if (millis() > timer + (1000 / SAMPLE_RATE)) {
+        static float finputs[MODEL_INPUT_SAMPLES*MODEL_INPUT_CHANNELS];
+        static number_t inputs[MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES];
+        static number_t outputs[MODEL_OUTPUT_SAMPLES];
         static unsigned int inference_count = 0;
 
         timer = millis();
