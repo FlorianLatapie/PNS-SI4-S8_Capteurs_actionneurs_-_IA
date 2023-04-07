@@ -58,3 +58,4 @@ dkms.conf
 *.iml
 
 !TP_IA/microai-gui-0.4.1.exe
+*.tar.*
