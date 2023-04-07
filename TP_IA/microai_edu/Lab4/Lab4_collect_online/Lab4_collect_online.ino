@@ -11,6 +11,11 @@ ICM_20948_I2C icm;
 
 static long long timer = 0;
 
+#define DURATION 5 * 60
+#define ACCEL_SAMPLES DURATION * SAMPLE_RATE
+static float accel_buf[ACCEL_SAMPLES][3];
+static size_t sample_i = 0;
+
 void setup() {
     // 10-14-21: Mandatory on new board revision otherwise I2C does not work
     pinMode(SD_ON_OFF, OUTPUT);
@@ -43,53 +48,60 @@ void setup() {
 
 void loop() {
     // Try to respect sampling rate
-    if (millis() > timer + (1000 / SAMPLE_RATE)) {
-        static float finputs[MODEL_INPUT_SAMPLES*MODEL_INPUT_CHANNELS];
-        static number_t inputs[MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES];
-        static number_t outputs[MODEL_OUTPUT_SAMPLES];
-        static unsigned int inference_count = 0;
 
-        timer = millis();
+    if (sample_i < ACCEL_SAMPLES) {
+        // Try to respect sampling rate
+        if (millis() > timer + (1000 / SAMPLE_RATE)) {
+            static unsigned int inference_count = 0;
 
-        if (icm.dataReady()) {
+            timer = millis();
+
+            if (icm.dataReady()) {
+                // Read accelerometer data
+                icm.getAGMT(); // The values are only updated when you call 'getAGMT'
+            }
+
+            // Blink LED for activity indicator
+            digitalWrite(LS_LED_BLUE, 1 - digitalRead(LS_LED_BLUE));
+
             // Read accelerometer data
-            icm.getAGMT(); // The values are only updated when you call 'getAGMT'
+            accel_buf[sample_i][0] = icm.accX() / 1000.0f;
+            accel_buf[sample_i][1] = icm.accY() / 1000.0f;
+            accel_buf[sample_i][2] = icm.accZ() / 1000.0f;
+
+            sample_i++;
         }
-
-        for (int i = 0; i < MODEL_INPUT_CHANNELS; i++)
-        {
-            for (int j = 0; j < MODEL_INPUT_SAMPLES; j++)
-            {
-                float temp = finputs[j * MODEL_INPUT_CHANNELS + i];
-                long_number_t long_temp = temp * (1 << FIXED_POINT);
-                inputs[i][j] = clamp_to_number_t(long_temp);
-            }
-        }
-
-        // Blink LED for activity indicator
-        digitalWrite(LS_LED_BLUE, 1 - digitalRead(LS_LED_BLUE));
-
-        // Run inference
-        cnn(inputs, outputs);
-
-        // Get output class
-        unsigned int label = 0;
-        float max_val = outputs[0];
-        for (unsigned int i = 1; i < MODEL_OUTPUT_SAMPLES; i++) {
-            if (max_val < outputs[i]) {
-                max_val = outputs[i];
-                label = i;
-            }
-        }
-
-        inference_count++;
-
-        // Format message with accelerometer data
+    } else { // Buffer is full, send to host
         char msg[128];
-        //snprintf(msg, sizeof(msg), "0,%f,%f,%f\r\n", icm.accX() / 1000.0f, icm.accY() / 1000.0f, icm.accZ() / 1000.0f);
-        snprintf(msg, sizeof(msg), "%d,%d,%f", inference_count, label, (double)max_val); // force double cast to workaround -Werror=double-promotion since printf uses variadic arguments so promotes to double automatically
 
-        // Send message over serial port
-        Serial.print(msg);
+        // LED lights up while waiting for host
+        digitalWrite(LS_LED_BLUE, HIGH);
+
+        // Wait for host to be available to read
+        while (!Serial.println("READY")) delay(100);
+        do {
+            int res = Serial.readBytesUntil('\n', msg, sizeof(msg));
+        } while (strncmp(msg, "READY", 5));
+
+        // Send data to the host
+        for (int i = 0; i < sample_i; i++) {
+            // Blink LED for activity indicator
+            digitalWrite(LS_LED_BLUE, 1 - digitalRead(LS_LED_BLUE));
+
+            // Simulate timestamp, avoids using additional memory for each sample in the buffer
+            int ts = i * 1000 / SAMPLE_RATE;
+
+            // Format message with accelerometer data
+            snprintf(msg, sizeof(msg), "3,%d,%f,%f,%f\r\n",sample_i, accel_buf[i][0], accel_buf[i][1], accel_buf[i][2]);
+            // Send message over serial port
+            Serial.print(msg);
+        }
+
+        // LED is off once transmission is finished
+        digitalWrite(LS_LED_BLUE, LOW);
+
+        while (true) delay(10000); // Wait until reset
+        // sample_i = 0; // If we want to go back to capturing immediately
     }
+
 }
