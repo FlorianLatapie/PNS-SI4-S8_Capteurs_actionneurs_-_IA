@@ -11,7 +11,7 @@ ICM_20948_I2C icm;
 
 static long long timer = 0;
 
-#define DURATION 1 * 60
+#define DURATION 5 * 60
 #define ACCEL_SAMPLES DURATION * SAMPLE_RATE
 #define SIZE 32
 
@@ -70,10 +70,7 @@ void loop() {
         // Blink LED for activity indicator
         //digitalWrite(LS_LED_BLUE, 1 - digitalRead(LS_LED_BLUE));
 
-        char msg2[128];
-        snprintf(msg2, sizeof(msg2), "0,%f,%f,%f\r\n", icm.accX() / 1000.0f, icm.accY() / 1000.0f, icm.accZ() / 1000.0f);
-
-        Serial.print(msg2);
+        printf("0,%f,%f,%f\r\n", icm.accX() / 1000.0f, icm.accY() / 1000.0f, icm.accZ() / 1000.0f);
 
         // Read accelerometer data
         accel_buf[sample_i][0] = icm.accX() / 1000.0f;
@@ -130,11 +127,7 @@ void loop() {
 
             inference_count++;
 
-            char msg[64];
-            snprintf(msg, sizeof(msg), "2,%d,%d\r\n", label, inference_count);
-
-            Serial.print(msg);
-
+            printf("2,%d,%d\r\n", label, inference_count);
         }
 
     }
