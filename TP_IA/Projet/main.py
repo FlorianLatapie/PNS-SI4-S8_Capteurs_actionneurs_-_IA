@@ -31,9 +31,13 @@ download_from_bird_json_infos(recordings_folder, test_bird_2_recordings_json)
 
 # clean data
 
+print("splitting audio into multiple recordings")
 for bird_type in os.listdir(recordings_folder):
     bird_folder = os.path.join(recordings_folder, bird_type)
-    for recording in os.listdir(bird_folder):
-        recording_path = os.path.join(bird_folder, recording)
-        split_audio_file(recording_path, bird_folder, "splitted_"+recording.split(".")[0])
+    print("looking into folder:", bird_folder)
+    if os.path.isdir(bird_folder):
+        for recording in os.listdir(bird_folder):
+            print("splitting recording", recording)
+            recording_path = os.path.join(bird_folder, recording)
+            split_audio_file(recording_path, bird_folder, "splitted_"+recording.split(".")[0], 3)
 
