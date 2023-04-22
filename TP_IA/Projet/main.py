@@ -18,8 +18,8 @@ def download_file(link, directory, filename):
         print("File exists, skipping")
         return
 
-    if not os.path.exists(output_folder):
-        os.mkdir(output_folder)
+    if not os.path.exists(directory):
+        os.mkdir(directory)
 
     with open(os.path.join(directory, filename), 'wb') as f:
         f.write(requests.get(link).content)
@@ -45,7 +45,7 @@ def download_from_bird_json_infos(bird_json):
     len_bird_recordings = len(bird_json)
     for index, recording in enumerate(bird_json):
         print("Downloading file:", index + 1, "out of", len_bird_recordings, "(", recording["file-name"], ")")
-        download_file(recording["file"], output_folder, recording["file-name"])
+        download_file(recording["file"], os.path.join(output_folder, recording["gen"]+"_"+recording["sp"]), recording["file-name"])
 
 
 # main
