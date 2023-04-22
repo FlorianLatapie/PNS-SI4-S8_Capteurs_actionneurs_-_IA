@@ -19,7 +19,7 @@ with open(os.path.join(recordings_folder, file_name), "w", encoding="utf-8") as 
             if os.path.isdir(bird_folder):
                 for recording in os.listdir(bird_folder):
                     sound_filename = os.path.join(bird_folder, recording)
-                    if os.path.isfile(sound_filename) and "_of_" in sound_filename:
+                    if os.path.isfile(sound_filename) and "splitted_" in sound_filename:
                         f.write(sound_filename + "\n")
                         count += 1
 

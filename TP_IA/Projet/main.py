@@ -35,5 +35,5 @@ for bird_type in os.listdir(recordings_folder):
     bird_folder = os.path.join(recordings_folder, bird_type)
     for recording in os.listdir(bird_folder):
         recording_path = os.path.join(bird_folder, recording)
-        split_audio_file(recording_path, bird_folder, recording.split(".")[0])
+        split_audio_file(recording_path, bird_folder, "splitted_"+recording.split(".")[0])
 
