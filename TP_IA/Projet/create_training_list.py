@@ -7,10 +7,6 @@ main_bird = "Parus major"
 
 file_name = "testing_list.txt"
 
-# saved to recordings folder
-# put all filnames of not main bird recordings in testing_list.txt
-# put half of the total number of current in testing_list.txt of main bird recordings
-
 count = 0
 with open(os.path.join(recordings_folder, file_name), "w", encoding="utf-8") as f:
     for bird_type in os.listdir(recordings_folder):
