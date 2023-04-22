@@ -36,8 +36,9 @@ for bird_type in os.listdir(recordings_folder):
     bird_folder = os.path.join(recordings_folder, bird_type)
     print("looking into folder:", bird_folder)
     if os.path.isdir(bird_folder):
-        for recording in os.listdir(bird_folder):
-            print("splitting recording", recording)
+        number_of_recordings = len(os.listdir(bird_folder))
+        for index, recording in enumerate(os.listdir(bird_folder)):
+            print("splitting recording", str(index+1), recording, "out of", number_of_recordings, "for bird", bird_type)
             recording_path = os.path.join(bird_folder, recording)
-            split_audio_file(recording_path, bird_folder, "splitted_"+recording.split(".")[0], 3)
+            split_audio_file(recording_path, bird_folder, recording.split(".")[0], 3)
 
