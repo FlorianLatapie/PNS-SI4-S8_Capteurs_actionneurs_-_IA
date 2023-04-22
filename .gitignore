@@ -61,3 +61,4 @@ dkms.conf
 *.tar.*
 TP_IA/microai_edu/Lab5/datasets/*
 TP_IA/Projet/recordings/*
+TP_IA/Projet/__pycache__/*
