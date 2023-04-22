@@ -17,7 +17,8 @@ découpage d'enregistrements aléatoires en qualité et longueurs et découpage 
 
 3 classes d'oiseaux, une classe que l'on va reconnaitre et deux pour tester. 
 
-
+2500 de celui qu'on veut repérer 
+250 de chaque autre
 
 ### Objectifs
 

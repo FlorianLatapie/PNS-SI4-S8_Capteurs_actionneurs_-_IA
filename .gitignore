@@ -60,3 +60,4 @@ dkms.conf
 !TP_IA/microai-gui-0.4.1.exe
 *.tar.*
 TP_IA/microai_edu/Lab5/datasets/*
+TP_IA/Projet/recordings/*
