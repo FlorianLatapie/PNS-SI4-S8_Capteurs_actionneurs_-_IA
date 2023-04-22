@@ -7,6 +7,18 @@
 
 ### Contexte
 
+set de données https://xeno-canto.org/explore/api
+
+recherche du dataset ayant le plus d'espèces différentes : parsing de la page https://xeno-canto.org/collection/species/all avec excel afin de trouver la meilleure espèce 
+
+![img.png](img.png)
+
+découpage d'enregistrements aléatoires en qualité et longueurs et découpage en enregistremenets de 3 sec 
+
+3 classes d'oiseaux, une classe que l'on va reconnaitre et deux pour tester. 
+
+
+
 ### Objectifs
 
 ### Environnement de test
