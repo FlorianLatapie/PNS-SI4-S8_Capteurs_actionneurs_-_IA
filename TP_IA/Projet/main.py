@@ -7,15 +7,15 @@ from prepare_and_clean_dataset import split_audio_file
 # parameters
 main_bird = "Parus major"
 main_bird_quality = ("A", "B", "C")
-number_of_main_bird_recordings = 5
+number_of_main_bird_recordings = 500
 
 test_bird_1 = "Turdus merula"
 test_bird_1_quality = ("A", "B", "C")
-number_of_test_bird_1_recordings = 1
+number_of_test_bird_1_recordings = 100
 
 test_bird_2 = "Fringilla coelebs"
 test_bird_2_quality = ("A", "B", "C")
-number_of_test_bird_2_recordings = 1
+number_of_test_bird_2_recordings = 100
 
 recordings_folder = "recordings"
 
@@ -36,3 +36,4 @@ for bird_type in os.listdir(recordings_folder):
     for recording in os.listdir(bird_folder):
         recording_path = os.path.join(bird_folder, recording)
         split_audio_file(recording_path, bird_folder, recording.split(".")[0])
+
