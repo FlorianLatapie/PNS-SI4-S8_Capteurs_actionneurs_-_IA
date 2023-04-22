@@ -14,7 +14,8 @@ def split_audio_file(audio_file_path, output_folder, output_file_name, split_len
 
     split_length_samples = split_length * sample_rate
     audio_signal = audio_signal[:len_audio_signal - len_audio_signal % split_length_samples]
-    audio_signal = np.split(audio_signal, len(audio_signal) / split_length_samples)
+    if len(audio_signal) > split_length:
+        audio_signal = np.split(audio_signal, len(audio_signal) / split_length_samples)
 
     number_of_files = str(int(len_audio_signal/sample_rate))
     for index, y_split in enumerate(audio_signal):
