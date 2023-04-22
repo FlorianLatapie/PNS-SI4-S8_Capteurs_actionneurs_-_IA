@@ -18,9 +18,9 @@ with open(os.path.join(recordings_folder, file_name), "w", encoding="utf-8") as 
                     if os.path.isfile(sound_filename) and "splitted_" in sound_filename:
                         f.write(sound_filename + "\n")
                         count += 1
-
     ratio = count / len(os.listdir(os.path.join(recordings_folder, main_bird.replace(" ", "_"))))
-    number_of_main_bird_recordings = count / 2
+    number_of_main_bird_recordings = count / (sum(os.path.isdir(os.path.join(recordings_folder, f)) for f in os.listdir(recordings_folder)) - 1)
+
     count = 0
 
     for recording in os.listdir(os.path.join(recordings_folder, main_bird.replace(" ", "_"))):
