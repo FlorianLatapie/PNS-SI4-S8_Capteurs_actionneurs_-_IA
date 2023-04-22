@@ -5,6 +5,9 @@ import soundfile as sf
 
 
 def split_audio_file(audio_file_path, output_folder, output_file_name, split_length=1):
+    if any(output_file_name in f for f in os.listdir(output_folder)):
+        print("file already exists, skipping")
+        return
     audio_signal, sample_rate = librosa.load(audio_file_path, sr=None)
 
     len_audio_signal = len(audio_signal)
