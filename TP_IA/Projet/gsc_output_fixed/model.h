@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    model.hh
-  * @author  Pierre-Emmanuel Novac <penovac@unice.fr>, LEAT, CNRS, Université Côte d'Azur, France
+  * @author  Pierre-Emmanuel Novac <penovac@unice.fr>, LEAT, CNRS, UniversitÃ© CÃ´te d'Azur, France
   * @version 1.0.0
   * @date    08 july 2020
   * @brief   Template generating plain C code for the implementation of Convolutional Neural Networks on MCU
@@ -20,7 +20,7 @@
 
 void cnn(
   const number_t input[MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES],
-  //dense_27_output_type dense_27_output);
+  //dense_5_output_type dense_5_output);
   number_t output[MODEL_OUTPUT_SAMPLES]);
 
 #endif//__MODEL_H__

@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    number.hh
-  * @author  Pierre-Emmanuel Novac <penovac@unice.fr>, LEAT, CNRS, Université Côte d'Azur, France
+  * @author  Pierre-Emmanuel Novac <penovac@unice.fr>, LEAT, CNRS, UniversitÃ© CÃ´te d'Azur, France
   * @version 1.0.0
   * @date    2 february 2021
   * @brief   Template generating plain C code for the implementation of Convolutional Neural Networks on MCU
