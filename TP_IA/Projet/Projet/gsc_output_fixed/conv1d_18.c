@@ -11,10 +11,10 @@
 #include "number.h"
 #endif
 
-#define INPUT_CHANNELS      16
-#define INPUT_SAMPLES       167
-#define CONV_FILTERS        8
-#define CONV_KERNEL_SIZE    7
+#define INPUT_CHANNELS      1
+#define INPUT_SAMPLES       1600
+#define CONV_FILTERS        32
+#define CONV_KERNEL_SIZE    80
 #define CONV_STRIDE         1
 
 #define ZEROPADDING_LEFT    0
@@ -24,9 +24,9 @@
 
 #define ACTIVATION_RELU
 
-typedef number_t conv1d_20_output_type[CONV_FILTERS][CONV_OUTSAMPLES];
+typedef number_t conv1d_18_output_type[CONV_FILTERS][CONV_OUTSAMPLES];
 
-static inline void conv1d_20(
+static inline void conv1d_18(
   const number_t input[INPUT_CHANNELS][INPUT_SAMPLES],               // IN
   const number_t kernel[CONV_FILTERS][INPUT_CHANNELS][CONV_KERNEL_SIZE], // IN
 
