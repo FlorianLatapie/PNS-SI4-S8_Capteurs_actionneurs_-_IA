@@ -12,135 +12,135 @@
 #include "model.h"
 
  // InputLayer is excluded
-#include "max_pooling1d_20.c" // InputLayer is excluded
-#include "conv1d_20.c"
-#include "weights/conv1d_20.c" // InputLayer is excluded
-#include "max_pooling1d_21.c" // InputLayer is excluded
-#include "conv1d_21.c"
-#include "weights/conv1d_21.c" // InputLayer is excluded
-#include "max_pooling1d_22.c" // InputLayer is excluded
-#include "conv1d_22.c"
-#include "weights/conv1d_22.c" // InputLayer is excluded
-#include "max_pooling1d_23.c" // InputLayer is excluded
-#include "average_pooling1d_5.c" // InputLayer is excluded
-#include "flatten_5.c" // InputLayer is excluded
-#include "dense_5.c"
-#include "weights/dense_5.c"
+#include "max_pooling1d_4.c" // InputLayer is excluded
+#include "conv1d_3.c"
+#include "weights/conv1d_3.c" // InputLayer is excluded
+#include "max_pooling1d_5.c" // InputLayer is excluded
+#include "conv1d_4.c"
+#include "weights/conv1d_4.c" // InputLayer is excluded
+#include "max_pooling1d_6.c" // InputLayer is excluded
+#include "conv1d_5.c"
+#include "weights/conv1d_5.c" // InputLayer is excluded
+#include "max_pooling1d_7.c" // InputLayer is excluded
+#include "average_pooling1d_1.c" // InputLayer is excluded
+#include "flatten_1.c" // InputLayer is excluded
+#include "dense_1.c"
+#include "weights/dense_1.c"
 #endif
 
 void cnn(
   const number_t input[MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES],
-  dense_5_output_type dense_5_output) {
+  dense_1_output_type dense_1_output) {
 
   // Output array allocation
   static union {
-    max_pooling1d_20_output_type max_pooling1d_20_output;
-    max_pooling1d_21_output_type max_pooling1d_21_output;
-    max_pooling1d_22_output_type max_pooling1d_22_output;
-    max_pooling1d_23_output_type max_pooling1d_23_output;
+    max_pooling1d_4_output_type max_pooling1d_4_output;
+    max_pooling1d_5_output_type max_pooling1d_5_output;
+    max_pooling1d_6_output_type max_pooling1d_6_output;
+    max_pooling1d_7_output_type max_pooling1d_7_output;
   } activations1;
 
   static union {
-    conv1d_20_output_type conv1d_20_output;
-    conv1d_21_output_type conv1d_21_output;
-    conv1d_22_output_type conv1d_22_output;
-    average_pooling1d_5_output_type average_pooling1d_5_output;
-    flatten_5_output_type flatten_5_output;
+    conv1d_3_output_type conv1d_3_output;
+    conv1d_4_output_type conv1d_4_output;
+    conv1d_5_output_type conv1d_5_output;
+    average_pooling1d_1_output_type average_pooling1d_1_output;
+    flatten_1_output_type flatten_1_output;
   } activations2;
 
 
   //static union {
 //
-//    static input_6_output_type input_6_output;
+//    static input_2_output_type input_2_output;
 //
-//    static max_pooling1d_20_output_type max_pooling1d_20_output;
+//    static max_pooling1d_4_output_type max_pooling1d_4_output;
 //
-//    static conv1d_20_output_type conv1d_20_output;
+//    static conv1d_3_output_type conv1d_3_output;
 //
-//    static max_pooling1d_21_output_type max_pooling1d_21_output;
+//    static max_pooling1d_5_output_type max_pooling1d_5_output;
 //
-//    static conv1d_21_output_type conv1d_21_output;
+//    static conv1d_4_output_type conv1d_4_output;
 //
-//    static max_pooling1d_22_output_type max_pooling1d_22_output;
+//    static max_pooling1d_6_output_type max_pooling1d_6_output;
 //
-//    static conv1d_22_output_type conv1d_22_output;
+//    static conv1d_5_output_type conv1d_5_output;
 //
-//    static max_pooling1d_23_output_type max_pooling1d_23_output;
+//    static max_pooling1d_7_output_type max_pooling1d_7_output;
 //
-//    static average_pooling1d_5_output_type average_pooling1d_5_output;
+//    static average_pooling1d_1_output_type average_pooling1d_1_output;
 //
-//    static flatten_5_output_type flatten_5_output;
+//    static flatten_1_output_type flatten_1_output;
 //
   //} activations;
 
   // Model layers call chain
  // InputLayer is excluded 
-  max_pooling1d_20(
+  max_pooling1d_4(
      // First layer uses input passed as model parameter
     input,
-    activations1.max_pooling1d_20_output
+    activations1.max_pooling1d_4_output
   );
  // InputLayer is excluded 
-  conv1d_20(
+  conv1d_3(
     
-    activations1.max_pooling1d_20_output,
-    conv1d_20_kernel,
-    conv1d_20_bias,
-    activations2.conv1d_20_output
+    activations1.max_pooling1d_4_output,
+    conv1d_3_kernel,
+    conv1d_3_bias,
+    activations2.conv1d_3_output
   );
  // InputLayer is excluded 
-  max_pooling1d_21(
+  max_pooling1d_5(
     
-    activations2.conv1d_20_output,
-    activations1.max_pooling1d_21_output
+    activations2.conv1d_3_output,
+    activations1.max_pooling1d_5_output
   );
  // InputLayer is excluded 
-  conv1d_21(
+  conv1d_4(
     
-    activations1.max_pooling1d_21_output,
-    conv1d_21_kernel,
-    conv1d_21_bias,
-    activations2.conv1d_21_output
+    activations1.max_pooling1d_5_output,
+    conv1d_4_kernel,
+    conv1d_4_bias,
+    activations2.conv1d_4_output
   );
  // InputLayer is excluded 
-  max_pooling1d_22(
+  max_pooling1d_6(
     
-    activations2.conv1d_21_output,
-    activations1.max_pooling1d_22_output
+    activations2.conv1d_4_output,
+    activations1.max_pooling1d_6_output
   );
  // InputLayer is excluded 
-  conv1d_22(
+  conv1d_5(
     
-    activations1.max_pooling1d_22_output,
-    conv1d_22_kernel,
-    conv1d_22_bias,
-    activations2.conv1d_22_output
+    activations1.max_pooling1d_6_output,
+    conv1d_5_kernel,
+    conv1d_5_bias,
+    activations2.conv1d_5_output
   );
  // InputLayer is excluded 
-  max_pooling1d_23(
+  max_pooling1d_7(
     
-    activations2.conv1d_22_output,
-    activations1.max_pooling1d_23_output
+    activations2.conv1d_5_output,
+    activations1.max_pooling1d_7_output
   );
  // InputLayer is excluded 
-  average_pooling1d_5(
+  average_pooling1d_1(
     
-    activations1.max_pooling1d_23_output,
-    activations2.average_pooling1d_5_output
+    activations1.max_pooling1d_7_output,
+    activations2.average_pooling1d_1_output
   );
  // InputLayer is excluded 
-  flatten_5(
+  flatten_1(
     
-    activations2.average_pooling1d_5_output,
-    activations2.flatten_5_output
+    activations2.average_pooling1d_1_output,
+    activations2.flatten_1_output
   );
  // InputLayer is excluded 
-  dense_5(
+  dense_1(
     
-    activations2.flatten_5_output,
-    dense_5_kernel,
-    dense_5_bias, // Last layer uses output passed as model parameter
-    dense_5_output
+    activations2.flatten_1_output,
+    dense_1_kernel,
+    dense_1_bias, // Last layer uses output passed as model parameter
+    dense_1_output
   );
 
 }
