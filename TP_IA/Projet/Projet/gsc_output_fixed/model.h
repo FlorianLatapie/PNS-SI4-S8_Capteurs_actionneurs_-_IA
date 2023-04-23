@@ -20,7 +20,7 @@
 
 void cnn(
   const number_t input[MODEL_INPUT_CHANNELS][MODEL_INPUT_SAMPLES],
-  //dense_5_output_type dense_5_output);
+  //dense_1_output_type dense_1_output);
   number_t output[MODEL_OUTPUT_SAMPLES]);
 
 #endif//__MODEL_H__
