@@ -18,9 +18,8 @@ def evaluate(x_path, y_path, dev: str='/dev/ttyACM0', baudrate: int=115200, time
     s = serial.Serial(dev, baudrate, timeout=timeout)
     print(s.name)
     r = s.readline().decode('cp437')
-    if 'READY' not in r:
-        return None
 
+    print('READY received')
     Result = namedtuple('Result', ['i', 'y_pred', 'score', 'time', 'y_true'], defaults=[-1, -1, -1, -1, -1])
     results = [] # read from target
     correct = 0 # Keep track of the number of correct predictions for accuracy
