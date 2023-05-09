@@ -27,3 +27,19 @@
 ## TDs scheduling
 
 - [TDs Scheduling (1 & 2)](./TDs_scheduling/tds_scheduling.md)
+
+## Labs et projet IA
+
+### Labs
+
+- [Lab 1](./TP_IA/microai_edu/Lab1/)
+- [Lab 2](./TP_IA/microai_edu/Lab2/)
+- [Lab 3](./TP_IA/microai_edu/Lab3/)
+- [Lab 4](./TP_IA/microai_edu/Lab4/)
+- [Lab 5](./TP_IA/microai_edu/Lab5/)
+- [Lab 6](./TP_IA/microai_edu/Lab6/)
+
+## Projet
+
+- [Dossier du projet](./TP_IA/Projet/)
+- [Rapport](./TP_IA/Projet/rapport/Rendu.pdf)
